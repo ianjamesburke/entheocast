@@ -104,35 +104,30 @@ No LLM needed. Direct JSON parsing, filter by compound keywords.
 
 ## Phase 7 — GitHub Actions + GitHub Pages
 
-- [ ] `.github/workflows/weekly.yml`
-  - [ ] Cron: `0 1 * * 1` (Sunday 8pm ET = Monday 1am UTC)
-  - [ ] Steps: checkout, uv sync, run pipeline, commit `data/` and `weekly/`, push
-  - [ ] GitHub Pages deploy step
-- [ ] Enable GitHub Pages in repo settings (source: `main` branch, root `/`)
-- [ ] Confirm first automated run produces valid output
+- [x] `.github/workflows/weekly.yml`
+  - [x] Cron: `0 1 * * 1` (Sunday 8pm ET = Monday 1am UTC)
+  - [x] Steps: checkout, uv sync, run pipeline, commit `data/` and `weekly/`, push
+  - [x] GitHub Pages deploy step
+- [x] Enable GitHub Pages in repo settings (source: GitHub Actions workflow)
+- [x] Confirm first automated run produces valid output — pipeline + deploy passed on first manual trigger
 
 ---
 
 ## Phase 8 — Launch
 
-- [ ] **`README.md`** — modeled on billboard-hot-100:
-  - [ ] One-paragraph description
-  - [ ] Pipeline overview
-  - [ ] Data schema table
-  - [ ] Local run instructions: `cd pipeline && uv sync && uv run python run.py`
-  - [ ] License: MIT
-- [ ] **`LICENSE`** — MIT
-- [ ] **Definition of Done audit** (from PRD):
-  - [ ] Pipeline runs, produces valid `data/entries.json` with 2026 backfill
-  - [ ] GitHub Pages site live, all pages present
-  - [ ] Trials table filters work
-  - [ ] At least one weekly issue HTML generated
-  - [ ] Podcast page shows "Coming Soon" cleanly
-  - [ ] GitHub Actions cron configured
-  - [ ] README complete
-  - [ ] PubMed + ClinicalTrials.gov scrapers reliable
-  - [ ] Tavily + Jina pipeline works for 2+ Tier 3 sources
-- [ ] Public repo, open source, MIT license confirmed
+- [x] **`README.md`** — description, pipeline overview, schema table, local run instructions
+- [x] **`LICENSE`** — MIT
+- [x] **Definition of Done audit** (from PRD):
+  - [x] Pipeline runs, produces valid `data/entries.json` with 2026 backfill
+  - [x] GitHub Pages site live, all pages present
+  - [x] Trials table filters work
+  - [x] At least one weekly issue HTML generated
+  - [x] Podcast page shows "Coming Soon" cleanly
+  - [x] GitHub Actions cron configured
+  - [x] README complete
+  - [x] PubMed + ClinicalTrials.gov scrapers reliable
+  - [x] Tavily + Jina pipeline works for 2+ Tier 3 sources
+- [x] Public repo, open source, MIT license confirmed
 
 ---
 
