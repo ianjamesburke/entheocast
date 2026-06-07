@@ -1,0 +1,156 @@
+# Entheocast — Roadmap
+
+Single source of truth for project progress. Every task, subtask, and decision lands here.
+Check boxes off as work completes. If a task expands, add subsections inline — never in a separate doc.
+
+---
+
+## Phase 1 — Foundation
+
+- [ ] `git init`, initial commit, `.gitignore`
+- [ ] `pipeline/pyproject.toml` — `requires-python = ">=3.11"`, deps: `httpx`, `feedparser`, `tavily-python`, `openai` (OpenRouter), `jina` or raw httpx for Jina Reader
+- [ ] `pipeline/sources.json` — full sources list from PRD
+- [ ] `data/entries.json` — empty array `[]`
+- [ ] `data/weekly/` — empty directory (`.gitkeep`)
+- [ ] `weekly/` — empty directory for generated HTML (`.gitkeep`)
+- [ ] `.env.example` — `TAVILY_API_KEY=` and `OPENROUTER_API_KEY=`
+
+---
+
+## Phase 2 — Pipeline: Tier 1 (Structured APIs)
+
+No LLM needed. Direct JSON parsing, filter by compound keywords.
+
+- [ ] `pipeline/run.py` — entrypoint: load sources, dispatch by tier, write `data/entries.json`
+- [ ] `pipeline/dedup.py` — `seen_urls.json` deduplication; SHA-256 id generation from title+doi+url
+- [ ] **PubMed** (`pipeline/sources/pubmed.py`)
+  - [ ] E-utilities search: `psilocybin OR MDMA OR LSD OR ketamine OR DMT OR ibogaine OR ayahuasca OR mescaline`
+  - [ ] Filter to clinical trials and research articles
+  - [ ] Map to schema fields
+- [ ] **ClinicalTrials.gov** (`pipeline/sources/clinicaltrials.py`)
+  - [ ] V2 API, filter by compound keywords in condition + intervention
+  - [ ] Map to schema: phase, status, institution, condition, sample_size
+- [ ] **Semantic Scholar** (`pipeline/sources/semantic_scholar.py`)
+  - [ ] Paper search API, compound keywords
+  - [ ] Map to schema
+- [ ] **bioRxiv/medRxiv** (`pipeline/sources/biorxiv.py`)
+  - [ ] `https://api.biorxiv.org/details/` endpoint
+  - [ ] Map to schema
+- [ ] **2026 backfill run** — run all Tier 1 scrapers, validate output, commit `data/entries.json`
+
+---
+
+## Phase 3 — Pipeline: Tier 2 (RSS + Jina Reader + Mimo)
+
+- [ ] `pipeline/jina.py` — Jina Reader wrapper: `GET https://r.jina.ai/<url>` → full text
+- [ ] `pipeline/mimo.py` — OpenRouter/Mimo wrapper: extract schema fields from full article text; prompt enforces extraction-only (no editorializing)
+- [ ] **MAPS.org** (`pipeline/sources/maps.py`)
+  - [ ] Parse `https://maps.org/feed/`
+  - [ ] Jina fetch each item
+  - [ ] Mimo extraction → schema
+- [ ] **Chacruna Institute** (`pipeline/sources/chacruna.py`)
+  - [ ] Parse `https://chacruna.net/feed/`
+  - [ ] Jina + Mimo extraction
+- [ ] **Lucid News** (`pipeline/sources/lucid_news.py`)
+  - [ ] Parse `https://www.lucid.news/feed/`
+  - [ ] Jina + Mimo extraction
+- [ ] Integration test: run Tier 2 against live feeds, validate entries append correctly
+
+---
+
+## Phase 4 — Pipeline: Tier 3 (Tavily + Jina + Mimo)
+
+- [ ] `pipeline/tavily.py` — Tavily search wrapper; returns URLs + snippets
+- [ ] **Psychedelic Alpha** — Tavily search `site:psychedelicalpha.com`, Jina + Mimo
+- [ ] **FDA Press Releases** — Tavily search `site:fda.gov psychedelic OR psilocybin OR MDMA`, Jina + Mimo
+- [ ] **Compass Pathways** — Tavily search `site:compasspathways.com`, Jina + Mimo
+- [ ] **Atai Life Sciences** — Tavily search `site:atai.life`, Jina + Mimo
+- [ ] **General News** — 4 broad Tavily queries from PRD, Jina + Mimo
+- [ ] Integration test: full Tier 3 run, check for duplication against Tier 1/2 entries
+
+---
+
+## Phase 5 — Weekly Issue Generator
+
+- [ ] `pipeline/weekly.py` — generate weekly snapshot
+  - [ ] Identify new entries added since last Sunday
+  - [ ] Group by compound
+  - [ ] Compute stats: total entries, new this week, compounds represented
+  - [ ] Write `data/weekly/YYYY-WNN.json`
+  - [ ] Generate `weekly/YYYY-WNN.html` from JSON (no prose, structured changelog format per PRD)
+- [ ] Run generator on backfill data to produce at least one valid weekly issue
+
+---
+
+## Phase 6 — Site
+
+**Style selection first.** Build 3 `index.html` variants, pick one, then build all pages.
+
+- [ ] **Style decision**
+  - [ ] `index-option-a.html` — clean academic (white, serif, Nature/Lancet vibes)
+  - [ ] `index-option-b.html` — dark modern (dark bg, monospace, neon accent)
+  - [ ] `index-option-c.html` — warm editorial (cream/tan, mixed serif+sans, earth tones)
+  - [ ] User picks style → apply to all pages
+
+- [ ] **`style.css`** — single shared stylesheet (chosen style)
+- [ ] **`index.html`** — homepage: latest weekly issue summary, links to all sections
+- [ ] **`trials.html`** — full trials table
+  - [ ] Loads `data/entries.json`
+  - [ ] Filterable by: compound, phase, status, condition (vanilla JS)
+  - [ ] Sortable by date
+- [ ] **`script.js`** — filtering + sorting logic for trials table
+- [ ] **`weekly/index.html`** — list of all weekly issues (auto-generated)
+- [ ] **`podcast.html`** — "Coming Soon" page: intentional, not broken
+  - [ ] Brief description of what the podcast will be
+  - [ ] Subscribe placeholder
+  - [ ] Visual that communicates real-but-not-launched
+- [ ] **`about.html`** — what Entheocast is, methodology, data sources list, link to raw data
+
+---
+
+## Phase 7 — GitHub Actions + GitHub Pages
+
+- [ ] `.github/workflows/weekly.yml`
+  - [ ] Cron: `0 1 * * 1` (Sunday 8pm ET = Monday 1am UTC)
+  - [ ] Steps: checkout, uv sync, run pipeline, commit `data/` and `weekly/`, push
+  - [ ] GitHub Pages deploy step
+- [ ] Enable GitHub Pages in repo settings (source: `main` branch, root `/`)
+- [ ] Confirm first automated run produces valid output
+
+---
+
+## Phase 8 — Launch
+
+- [ ] **`README.md`** — modeled on billboard-hot-100:
+  - [ ] One-paragraph description
+  - [ ] Pipeline overview
+  - [ ] Data schema table
+  - [ ] Local run instructions: `cd pipeline && uv sync && uv run python run.py`
+  - [ ] License: MIT
+- [ ] **`LICENSE`** — MIT
+- [ ] **Definition of Done audit** (from PRD):
+  - [ ] Pipeline runs, produces valid `data/entries.json` with 2026 backfill
+  - [ ] GitHub Pages site live, all pages present
+  - [ ] Trials table filters work
+  - [ ] At least one weekly issue HTML generated
+  - [ ] Podcast page shows "Coming Soon" cleanly
+  - [ ] GitHub Actions cron configured
+  - [ ] README complete
+  - [ ] PubMed + ClinicalTrials.gov scrapers reliable
+  - [ ] Tavily + Jina pipeline works for 2+ Tier 3 sources
+- [ ] Public repo, open source, MIT license confirmed
+
+---
+
+## Future (Post-Launch)
+
+Not in scope for v1. Do not build until launch criteria are met.
+
+- [ ] Custom domain
+- [ ] Resend newsletter integration
+- [ ] Podcast audio generation
+- [ ] YouTube episode embeds + transcripts on podcast page
+
+---
+
+*Kill criteria (from PRD): < 50 GitHub stars and < 1,000 monthly visits after 8 weeks → kill it.*
