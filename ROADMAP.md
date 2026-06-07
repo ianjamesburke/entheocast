@@ -7,13 +7,13 @@ Check boxes off as work completes. If a task expands, add subsections inline —
 
 ## Phase 1 — Foundation
 
-- [ ] `git init`, initial commit, `.gitignore`
-- [ ] `pipeline/pyproject.toml` — `requires-python = ">=3.11"`, deps: `httpx`, `feedparser`, `tavily-python`, `openai` (OpenRouter), `jina` or raw httpx for Jina Reader
-- [ ] `pipeline/sources.json` — full sources list from PRD
-- [ ] `data/entries.json` — empty array `[]`
-- [ ] `data/weekly/` — empty directory (`.gitkeep`)
-- [ ] `weekly/` — empty directory for generated HTML (`.gitkeep`)
-- [ ] `.env.example` — `TAVILY_API_KEY=` and `OPENROUTER_API_KEY=`
+- [x] `git init`, initial commit, `.gitignore`
+- [x] `pipeline/pyproject.toml` — `requires-python = ">=3.11"`, deps: `httpx`, `feedparser`, `tavily-python`, `openai` (OpenRouter), `jina` or raw httpx for Jina Reader
+- [x] `pipeline/sources.json` — full sources list from PRD
+- [x] `data/entries.json` — empty array `[]`
+- [x] `data/weekly/` — empty directory (`.gitkeep`)
+- [x] `weekly/` — empty directory for generated HTML (`.gitkeep`)
+- [x] `.env.example` — `TAVILY_API_KEY=` and `OPENROUTER_API_KEY=`
 
 ---
 
@@ -21,22 +21,22 @@ Check boxes off as work completes. If a task expands, add subsections inline —
 
 No LLM needed. Direct JSON parsing, filter by compound keywords.
 
-- [ ] `pipeline/run.py` — entrypoint: load sources, dispatch by tier, write `data/entries.json`
-- [ ] `pipeline/dedup.py` — `seen_urls.json` deduplication; SHA-256 id generation from title+doi+url
-- [ ] **PubMed** (`pipeline/sources/pubmed.py`)
-  - [ ] E-utilities search: `psilocybin OR MDMA OR LSD OR ketamine OR DMT OR ibogaine OR ayahuasca OR mescaline`
-  - [ ] Filter to clinical trials and research articles
-  - [ ] Map to schema fields
-- [ ] **ClinicalTrials.gov** (`pipeline/sources/clinicaltrials.py`)
-  - [ ] V2 API, filter by compound keywords in condition + intervention
-  - [ ] Map to schema: phase, status, institution, condition, sample_size
-- [ ] **Semantic Scholar** (`pipeline/sources/semantic_scholar.py`)
-  - [ ] Paper search API, compound keywords
-  - [ ] Map to schema
-- [ ] **bioRxiv/medRxiv** (`pipeline/sources/biorxiv.py`)
-  - [ ] `https://api.biorxiv.org/details/` endpoint
-  - [ ] Map to schema
-- [ ] **2026 backfill run** — run all Tier 1 scrapers, validate output, commit `data/entries.json`
+- [x] `pipeline/run.py` — entrypoint: load sources, dispatch by tier, write `data/entries.json`
+- [x] `pipeline/dedup.py` — `seen_urls.json` deduplication; SHA-256 id generation from title+doi+url
+- [x] **PubMed** (`pipeline/sources/pubmed.py`)
+  - [x] E-utilities search: `psilocybin OR MDMA OR LSD OR ketamine OR DMT OR ibogaine OR ayahuasca OR mescaline`
+  - [x] Filter to clinical trials and research articles
+  - [x] Map to schema fields
+- [x] **ClinicalTrials.gov** (`pipeline/sources/clinicaltrials.py`)
+  - [x] V2 API, filter by compound keywords in condition + intervention
+  - [x] Map to schema: phase, status, institution, condition, sample_size
+- [x] **Semantic Scholar** (`pipeline/sources/semantic_scholar.py`)
+  - [x] Paper search API, compound keywords
+  - [x] Map to schema
+- [x] **bioRxiv/medRxiv** (`pipeline/sources/biorxiv.py`)
+  - [x] `https://api.biorxiv.org/details/` endpoint
+  - [x] Map to schema
+- [x] **2026 backfill run** — 253 entries (200 PubMed, 28 Semantic Scholar, 25 ClinicalTrials). Semantic Scholar still occasionally 429; weekly cron will recover. ClinicalTrials fixed to use curl backend (httpx blocked by TLS fingerprint).
 
 ---
 

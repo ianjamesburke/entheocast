@@ -1,4 +1,6 @@
-import httpx
+import json
+import subprocess
+import urllib.parse
 from datetime import date
 from dedup import make_id
 
@@ -55,6 +57,20 @@ def _detect_condition(text: str) -> str:
     return "other"
 
 
+def _curl_get(url: str, params: dict) -> dict:
+    qs = urllib.parse.urlencode(params)
+    full_url = f"{url}?{qs}"
+    result = subprocess.run(
+        ["curl", "-s", "--compressed", full_url],
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"curl failed: {result.stderr}")
+    return json.loads(result.stdout)
+
+
 def fetch(min_date: str | None = None) -> list[dict]:
     all_entries = []
     for compound in COMPOUND_KEYWORDS:
@@ -63,12 +79,8 @@ def fetch(min_date: str | None = None) -> list[dict]:
             "pageSize": 50,
             "fields": "NCTId,BriefTitle,OverallStatus,Phase,LeadSponsorName,EnrollmentCount,StartDate,PrimaryCompletionDate,Condition,InterventionName",
         }
-        headers = {"User-Agent": "entheocast-pipeline/0.1 (research; github.com/entheocast)"}
         try:
-            with httpx.Client(timeout=30, headers=headers) as client:
-                resp = client.get(BASE, params=params)
-                resp.raise_for_status()
-                data = resp.json()
+            data = _curl_get(BASE, params)
         except Exception as e:
             print(f"ClinicalTrials fetch error for {compound}: {e}")
             continue
