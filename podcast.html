@@ -175,39 +175,6 @@
       </ul>
     </div>
 
-    <form class="notify-form" onsubmit="handleSubmit(event)">
-      <input type="email" id="email-input" placeholder="your@email.com" required>
-      <button type="submit" class="notify-btn">Notify me</button>
-    </form>
-    <p class="notify-note" id="notify-note">No spam. One email when the first episode drops.</p>
-
-    <div class="ep-preview">
-      <div class="ep-preview-label">Planned episodes</div>
-      <div class="ep-stub">
-        <div class="ep-num">Ep 1</div>
-        <div class="ep-stub-body">
-          <div class="ep-stub-title">Reading the MAPP2 Interim: What the Phase 3 MDMA Data Actually Says</div>
-          <div class="ep-stub-meta">w/ MAPS clinical team · ~35 min</div>
-        </div>
-        <div class="ep-stub-lock">Soon</div>
-      </div>
-      <div class="ep-stub">
-        <div class="ep-num">Ep 2</div>
-        <div class="ep-stub-body">
-          <div class="ep-stub-title">Psilocybin's Mechanism: Default Mode Network, Neuroplasticity, and What We Don't Know</div>
-          <div class="ep-stub-meta">neuropharmacology deep-dive · ~40 min</div>
-        </div>
-        <div class="ep-stub-lock">Soon</div>
-      </div>
-      <div class="ep-stub">
-        <div class="ep-num">Ep 3</div>
-        <div class="ep-stub-body">
-          <div class="ep-stub-title">Scheduling, Patents, and Access: The Policy Landscape After FDA Approval</div>
-          <div class="ep-stub-meta">regulatory & legal analysis · ~30 min</div>
-        </div>
-        <div class="ep-stub-lock">Soon</div>
-      </div>
-    </div>
   </div>
 </main>
 
@@ -217,15 +184,5 @@
 </footer>
 </div>
 
-<script>
-function handleSubmit(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('button');
-  btn.textContent = "Done ✓";
-  btn.disabled = true;
-  btn.style.background = "#059669";
-  document.getElementById("notify-note").textContent = "You're on the list.";
-}
-</script>
 </body>
 </html>
