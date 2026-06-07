@@ -150,3 +150,53 @@ footer {
 }
 footer a { color: var(--muted); text-decoration: none; }
 footer a:hover { color: var(--text); }
+
+/* ── Mobile responsiveness ── */
+@media (max-width: 768px) {
+  /* Hide molecule canvas on mobile — performance + visual noise */
+  .mol-layer { display: none; }
+
+  /* Header */
+  .header-inner { padding: 0.9rem 1rem; gap: 0.75rem; }
+
+  /* Nav: tighter, wraps if needed */
+  nav { gap: 1rem; font-size: 0.72rem; flex-wrap: wrap; }
+
+  /* Main content area */
+  .main-wrap { padding: 1.75rem 1rem 4rem; }
+
+  /* Page heading */
+  .page-heading { font-size: 1.35rem; }
+
+  /* Entry cards: stack badges below title */
+  .entry-top { flex-direction: column; }
+  .entry-badges { justify-content: flex-start; }
+
+  /* Summary rows: stack label above value */
+  .summary-row { grid-template-columns: 1fr; gap: 0; }
+  .summary-key { margin-bottom: 0.1rem; }
+
+  /* Simple entries: chip below body */
+  .entry-simple { flex-direction: column; gap: 0.4rem; }
+
+  /* Footer: stack vertically */
+  footer { flex-direction: column; gap: 0.4rem; padding: 1rem; }
+
+  /* Trials table: horizontal scroll */
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { min-width: 560px; }
+}
+
+@media (max-width: 480px) {
+  /* Wordmark */
+  .wordmark { font-size: 0.95rem; }
+
+  /* Nav: smaller still, allow wrap */
+  nav { gap: 0.75rem; font-size: 0.68rem; }
+
+  /* Podcast coming-soon title */
+  .cs-title { font-size: 1.75rem; }
+
+  /* Notify form: stack on very small screens */
+  .notify-form { flex-direction: column; }
+}
