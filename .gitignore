@@ -1,0 +1,12 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+.python-version
+.venv/
+pipeline/.venv/
+# pipeline/uv.lock -- keep this committed for reproducibility
+*.egg-info/
+dist/
+build/
+.DS_Store

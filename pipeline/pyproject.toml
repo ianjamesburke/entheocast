@@ -1,0 +1,11 @@
+[project]
+name = "entheocast-pipeline"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx",
+    "feedparser",
+    "tavily-python",
+    "openai",
+    "python-dotenv",
+]

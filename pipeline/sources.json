@@ -1,0 +1,14 @@
+[
+  {"name": "PubMed", "tier": 1, "type": "api", "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/", "notes": "E-utilities API. Search: psilocybin OR MDMA OR LSD OR ketamine OR DMT OR ibogaine OR ayahuasca OR mescaline in clinical trials and research articles."},
+  {"name": "ClinicalTrials.gov", "tier": 1, "type": "api", "url": "https://clinicaltrials.gov/api/v2/studies", "notes": "V2 API. Filter by condition + intervention keywords. Returns structured JSON."},
+  {"name": "Semantic Scholar", "tier": 1, "type": "api", "url": "https://api.semanticscholar.org/graph/v1/paper/search", "notes": "Academic paper search. Catches preprints and new publications."},
+  {"name": "bioRxiv/medRxiv", "tier": 1, "type": "api", "url": "https://api.biorxiv.org/details/", "notes": "Preprint servers. Early results before peer review."},
+  {"name": "MAPS.org", "tier": 2, "type": "rss", "url": "https://maps.org/feed/", "notes": "Multidisciplinary Association for Psychedelic Studies. Press releases, study updates."},
+  {"name": "Chacruna Institute", "tier": 2, "type": "rss", "url": "https://chacruna.net/feed/", "notes": "Cultural and ethical perspectives on psychedelics."},
+  {"name": "Lucid News", "tier": 2, "type": "rss", "url": "https://www.lucid.news/feed/", "notes": "Psychedelic journalism. Features, interviews, policy."},
+  {"name": "Psychedelic Alpha", "tier": 3, "type": "tavily+jina", "url": "https://psychedelicalpha.com/", "notes": "Industry news aggregator. Regulatory + business angles."},
+  {"name": "FDA Press Releases", "tier": 3, "type": "tavily+jina", "url": "https://www.fda.gov/news-events/press-announcements", "notes": "Filter for psychedelic-related approvals, breakthrough therapy designations."},
+  {"name": "Compass Pathways", "tier": 3, "type": "tavily+jina", "url": "https://www.compasspathways.com/press-releases/", "notes": "Publicly traded. Phase 2/3 psilocybin trials."},
+  {"name": "Atai Life Sciences", "tier": 3, "type": "tavily+jina", "url": "https://www.atai.life/press-releases/", "notes": "Publicly traded. Multiple compound portfolio."},
+  {"name": "General News", "tier": 3, "type": "tavily", "queries": ["psychedelic clinical trial 2026", "psilocybin FDA", "MDMA therapy approval", "ketamine treatment study"], "notes": "Broad web search for news not caught by specific sources."}
+]
