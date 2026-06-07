@@ -27,6 +27,17 @@ def _is_relevant(text: str) -> bool:
     return any(k in t for k in COMPOUND_KEYWORDS)
 
 
+_BOT_CHALLENGE_PHRASES = ("just a moment", "enable javascript", "checking your browser", "ddos protection")
+
+
+def _is_real_article(text: str) -> bool:
+    """Return False if text looks like a bot-challenge or error page."""
+    if len(text) < 200:
+        return False
+    t = text.lower()
+    return not any(p in t for p in _BOT_CHALLENGE_PHRASES)
+
+
 def _days_since(min_date: str) -> int:
     delta = date.today() - datetime.strptime(min_date, "%Y-%m-%d").date()
     return max(delta.days, 1)
@@ -62,6 +73,9 @@ def fetch_tavily(queries: list[str], source_name: str, min_date: str | None = No
                 print(f"{source_name}: Jina error for {url}: {e}")
                 continue
 
+            if not _is_real_article(text):
+                print(f"{source_name}: skipping bot-challenge page {url}")
+                continue
             extracted = mimo.extract(text, url)
             if not extracted:
                 continue

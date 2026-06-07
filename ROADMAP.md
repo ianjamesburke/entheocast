@@ -67,13 +67,13 @@ No LLM needed. Direct JSON parsing, filter by compound keywords.
 
 ## Phase 5 — Weekly Issue Generator
 
-- [ ] `pipeline/weekly.py` — generate weekly snapshot
-  - [ ] Identify new entries added since last Sunday
-  - [ ] Group by compound
-  - [ ] Compute stats: total entries, new this week, compounds represented
-  - [ ] Write `data/weekly/YYYY-WNN.json`
-  - [ ] Generate `weekly/YYYY-WNN.html` from JSON (no prose, structured changelog format per PRD)
-- [ ] Run generator on backfill data to produce at least one valid weekly issue
+- [x] `pipeline/weekly.py` — generate weekly snapshot
+  - [x] Identify new entries added since last Sunday
+  - [x] Group by compound
+  - [x] Compute stats: total entries, new this week, compounds represented
+  - [x] Write `data/weekly/YYYY-WNN.json`
+  - [x] Generate `weekly/YYYY-WNN.html` from JSON (no prose, structured changelog format per PRD)
+- [x] Run generator on backfill data to produce at least one valid weekly issue — `data/weekly/2026-W23.json` + `weekly/2026-W23.html` (291 entries, 9 compounds). Bot-challenge filter added to tavily_base.py.
 
 ---
 
