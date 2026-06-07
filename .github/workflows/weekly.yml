@@ -1,0 +1,58 @@
+name: Weekly Pipeline
+
+on:
+  schedule:
+    - cron: '0 1 * * 1'   # Monday 01:00 UTC = Sunday 8pm ET
+  workflow_dispatch:        # allow manual trigger
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: Run pipeline
+        working-directory: pipeline
+        env:
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: uv run python run.py
+
+      - name: Commit updated data and weekly files
+        run: |
+          git config user.name "entheocast-bot"
+          git config user.email "bot@entheocast"
+          git add data/ weekly/
+          git diff --cached --quiet || git commit -m "weekly update $(date -u +%Y-%m-%d)"
+          git push
+
+  deploy-pages:
+    needs: run-pipeline
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

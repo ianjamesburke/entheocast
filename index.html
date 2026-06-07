@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entheocast — Psychedelic Research Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="molecules.js"></script>
+  <style>
+    .layout { display: grid; grid-template-columns: 1fr 240px; gap: 4rem; align-items: start; }
+
+    /* Issue hero */
+    .issue-block { position: relative; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); overflow: hidden; }
+    .ambient-num { position: absolute; top: -1.5rem; left: -0.75rem; font-family: 'Syne',sans-serif; font-weight: 800; font-size: 9rem; line-height: 1; color: var(--accent); opacity: 0.05; pointer-events: none; letter-spacing: -0.03em; user-select: none; }
+    .issue-kicker { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; position: relative; }
+    .issue-date { font-family: 'Syne',sans-serif; font-weight: 700; font-size: 1.65rem; color: var(--text); line-height: 1.2; margin-bottom: 0.55rem; position: relative; }
+    .issue-desc { font-size: 0.84rem; color: var(--dim); margin-bottom: 1rem; position: relative; }
+    .issue-desc strong { color: var(--text); font-weight: 600; }
+    .issue-cta { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; color: var(--accent); text-decoration: none; position: relative; }
+    .issue-cta:hover { text-decoration: underline; }
+
+    /* Spotlight */
+    .spotlight { background: #fffdf5; border: 1px solid #e8c97a; border-left: 3px solid #c07c10; border-radius: 5px; padding: 1.15rem 1.4rem; margin-bottom: 2rem; }
+    .spotlight-flag { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #a06010; margin-bottom: 0.4rem; }
+    .spotlight h3 { font-family: 'Syne',sans-serif; font-size: 0.97rem; font-weight: 700; color: #1c1408; line-height: 1.35; margin-bottom: 0.5rem; }
+    .spotlight p { font-size: 0.81rem; color: #5a4020; line-height: 1.6; margin-bottom: 0.7rem; }
+    .spotlight-link { font-size: 0.76rem; font-weight: 600; color: #a06010; text-decoration: none; }
+    .spotlight-link:hover { text-decoration: underline; }
+
+    /* Entry cards with structured AI summary */
+    .entry-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.2rem 1.4rem; margin-bottom: 0.75rem; transition: border-color 0.15s; }
+    .entry-card:hover { border-color: var(--border-strong); }
+    .entry-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.85rem; margin-bottom: 0.5rem; }
+    .entry-badges { display: flex; gap: 0.4rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+    .entry-h { font-size: 0.91rem; font-weight: 600; line-height: 1.45; color: var(--text); }
+    .entry-h a { color: inherit; text-decoration: none; }
+    .entry-h a:hover { color: var(--accent); }
+    .entry-source { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
+    .summary { margin-top: 0.9rem; padding-top: 0.9rem; border-top: 1px solid var(--border); }
+    .summary-row { display: grid; grid-template-columns: 96px 1fr; gap: 0.2rem 0.85rem; margin-bottom: 0.4rem; line-height: 1.5; }
+    .summary-key { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); padding-top: 0.18rem; }
+    .summary-val { font-size: 0.8rem; color: var(--dim); }
+    .summary-val strong { color: var(--text); font-weight: 600; }
+    .entry-footer { margin-top: 0.9rem; display: flex; justify-content: flex-end; }
+    .source-link { font-size: 0.73rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+    .source-link:hover { text-decoration: underline; }
+
+    /* Simple entries (live feed) */
+    .entry-simple { display: flex; align-items: flex-start; gap: 0.85rem; padding: 0.9rem 0; border-bottom: 1px solid var(--border); }
+    .entry-simple:last-child { border-bottom: none; }
+    .entry-simple-body { flex: 1; min-width: 0; }
+    .entry-simple-title { font-size: 0.86rem; line-height: 1.48; margin-bottom: 0.18rem; }
+    .entry-simple-title a { color: var(--text); text-decoration: none; }
+    .entry-simple-title a:hover { color: var(--accent); }
+    .entry-simple-meta { font-size: 0.7rem; color: var(--muted); }
+
+    .muted-text { font-size: 0.8rem; color: var(--dim); line-height: 1.65; }
+    .muted-text a { color: var(--accent); text-decoration: none; }
+    .muted-text a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<!-- Floating molecular ring structures
+     mol-1,4: Indole (bicyclic core of DMT, psilocybin, LSD, serotonin — benzene fused to N-containing pyrrole)
+     mol-2:   Naphthalene (two fused aromatic hexagons)
+     mol-3:   Benzene (aromatic hexagonal ring with delocalized electrons, shown as dashed inner circle)
+     mol-5:   Pyridine (6-membered ring with one nitrogen — present in many plant alkaloids) -->
+<div class="page">
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="wordmark">ENTHEO<span class="dot">·</span>CAST</a>
+    <nav>
+      <a href="trials.html">Trials</a>
+      <a href="weekly/index.html">Weekly</a>
+      <a href="podcast.html">Podcast</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-wrap">
+  <div class="layout">
+    <div>
+
+      <div class="issue-block">
+        <div class="issue-kicker">Week 23 · June 2026</div>
+        <div class="issue-date">June 1–7, 2026</div>
+        <p class="issue-desc"><strong id="stat-entries">291</strong> entries tracked across <strong>9</strong> compounds — updated every Sunday.</p>
+        <a href="weekly/2026-W23.html" class="issue-cta">Read this week's full issue →</a>
+      </div>
+
+      <div class="spotlight">
+        <div class="spotlight-flag">Policy Update · Breaking</div>
+        <h3>Trump Administration Fast-Tracks Psychedelic Research Approvals</h3>
+        <p>A new executive directive instructs the DEA and FDA to expedite Schedule I research protocol reviews, targeting a 90-day approval window vs. the current 18-month average. MAPS, Compass Pathways, MindMed, and 11 other sponsors have submitted applications under the new pathway. Priority indications cited: veteran PTSD, treatment-resistant depression, and substance use disorders.</p>
+        <a href="#" class="spotlight-link">Read the DEA announcement →</a>
+      </div>
+
+      <div class="section-label">Featured This Week</div>
+
+      <div class="entry-card">
+        <div class="entry-top">
+          <div>
+            <div class="entry-h">Psilocybin for Treatment-Resistant Depression: 12-Month Follow-up of Phase 2 RCT</div>
+            <div class="entry-source">New England Journal of Medicine · PubMed · Published Jan 2026</div>
+          </div>
+          <div class="entry-badges">
+            <span class="chip psilocybin">Psilocybin</span>
+            <span class="type-chip">Phase 2</span>
+          </div>
+        </div>
+        <div class="summary">
+          <div class="summary-row">
+            <span class="summary-key">Population</span>
+            <span class="summary-val">233 adults with treatment-resistant MDD (≥2 failed antidepressants), ages 18–65</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">Intervention</span>
+            <span class="summary-val">Single 25mg psilocybin session + 8hr therapist support; double-blind placebo-controlled</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">Key Finding</span>
+            <span class="summary-val"><strong>71% response rate at 12 weeks; 29% full remission at 6 months</strong> (vs 8% placebo). Sustained response correlated with mystical-experience score at session.</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">Status</span>
+            <span class="summary-val">Published · Phase 3 now recruiting (NCT05984628) · FDA Breakthrough Therapy Designation held</span>
+          </div>
+        </div>
+        <div class="entry-footer"></div>
+      </div>
+
+      <div class="entry-card">
+        <div class="entry-top">
+          <div>
+            <div class="entry-h"><a href="https://clinicaltrials.gov/study/NCT05765032" target="_blank" rel="noopener">MDMA-Assisted Therapy for PTSD: MAPP2 Phase 3 Global Trial — 12-Month Interim Analysis</a></div>
+            <div class="entry-source">MAPS · ClinicalTrials.gov · NCT05765032 · Active</div>
+          </div>
+          <div class="entry-badges">
+            <span class="chip mdma">MDMA</span>
+            <span class="type-chip">Phase 3</span>
+          </div>
+        </div>
+        <div class="summary">
+          <div class="summary-row">
+            <span class="summary-key">Population</span>
+            <span class="summary-val">1,200 adults with severe PTSD (CAPS-5 ≥35) across 20 sites in US, EU, and Australia</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">Intervention</span>
+            <span class="summary-val">3 MDMA sessions (80–120mg) + manualized integrative psychotherapy protocol over 18 weeks</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">Key Finding</span>
+            <span class="summary-val"><strong>68% no longer meet PTSD criteria at 12-month interim</strong>; mean CAPS-5 reduction 24.4 pts (placebo: 9.1). Serious adverse events 2.1%; no abuse signals.</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">Status</span>
+            <span class="summary-val">Active · Enrolling · Est. completion Dec 2026 · NDA filing targeted Q2 2027</span>
+          </div>
+        </div>
+        <div class="entry-footer"><a href="https://clinicaltrials.gov/study/NCT05765032" target="_blank" rel="noopener" class="source-link">View on ClinicalTrials.gov →</a></div>
+      </div>
+
+      <div class="entry-card">
+        <div class="entry-top">
+          <div>
+            <div class="entry-h">Ketamine and Esketamine in Major Depression: Systematic Review and Meta-Analysis of 68 RCTs</div>
+            <div class="entry-source">Lancet Psychiatry · PubMed · Published Mar 2026</div>
+          </div>
+          <div class="entry-badges">
+            <span class="chip ketamine">Ketamine</span>
+            <span class="type-chip">Meta-analysis</span>
+          </div>
+        </div>
+        <div class="summary">
+          <div class="summary-row">
+            <span class="summary-key">Population</span>
+            <span class="summary-val">8,240 patients across 68 RCTs; unipolar and bipolar MDD; multiple administration routes</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">Intervention</span>
+            <span class="summary-val">IV ketamine 0.5mg/kg over 40 min, or intranasal esketamine (Spravato); 1–6 sessions</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">Key Finding</span>
+            <span class="summary-val"><strong>NNT 3.2 for acute response; effect size d=0.89</strong>; 52% maintain response at 4 weeks. Dissociation risk elevated in ketamine-naive patients.</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-key">Status</span>
+            <span class="summary-val">Published · NICE review pending · FDA Spravato labeling update under consideration</span>
+          </div>
+        </div>
+        <div class="entry-footer"></div>
+      </div>
+
+      <div class="section-label" style="margin-top:2rem">More from the Feed</div>
+      <div id="entry-list">
+        <div class="entry-simple"><div class="entry-simple-body"><div class="entry-simple-meta">Loading...</div></div></div>
+      </div>
+      <p class="view-all"><a href="trials.html">View all entries →</a></p>
+
+    </div>
+
+    <aside>
+      <div class="sidebar-block">
+        <div class="sidebar-label">By Compound</div>
+        <div id="compound-bars"><div style="font-size:0.78rem;color:var(--muted)">Loading...</div></div>
+      </div>
+      <div class="sidebar-block">
+        <div class="sidebar-label">About</div>
+        <p class="muted-text">Psychedelic clinical trials, regulatory updates, and research — aggregated weekly from PubMed, ClinicalTrials.gov, Semantic Scholar, and curated news sources. Open data, MIT licensed.</p>
+        <p class="muted-text" style="margin-top:0.6rem"><a href="about.html">Methodology →</a>&emsp;<a href="data/entries.json">Raw JSON →</a></p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <span>Entheocast · Open data · MIT</span>
+  <span><a href="https://github.com/ianjamesburke/entheocast">GitHub</a> · Updated weekly</span>
+</footer>
+</div>
+
+<script>
+const COMPOUND_LABELS = { psilocybin:"Psilocybin", mdma:"MDMA", ketamine:"Ketamine", lsd:"LSD", dmt:"DMT", ibogaine:"Ibogaine", ayahuasca:"Ayahuasca", mescaline:"Mescaline", other:"Other" };
+const COMPOUND_ORDER = ["psilocybin","mdma","ketamine","lsd","dmt","ibogaine","ayahuasca","mescaline","other"];
+const TYPE_LABELS = { phase_1:"Phase 1", phase_2:"Phase 2", phase_3:"Phase 3", observational:"Observational", meta_analysis:"Meta-analysis", regulatory:"Regulatory", news:"News", preprint:"Preprint" };
+
+fetch("data/entries.json").then(r=>r.json()).then(entries=>{
+  document.getElementById("stat-entries").textContent = entries.length;
+  const counts={};
+  entries.forEach(e=>{ const c=e.compound||"other"; counts[c]=(counts[c]||0)+1; });
+  const max=Math.max(...Object.values(counts));
+  document.getElementById("compound-bars").innerHTML=COMPOUND_ORDER.filter(c=>counts[c]).map(c=>`<div class="cbar"><span class="cbar-name">${COMPOUND_LABELS[c]||c}</span><div class="cbar-track"><div class="cbar-fill" style="width:${Math.round(counts[c]/max*100)}%"></div></div><span class="cbar-count">${counts[c]}</span></div>`).join("");
+  const chip=c=>["psilocybin","mdma","ketamine","lsd","dmt","ibogaine","ayahuasca","mescaline"].includes(c)?c:"other";
+  document.getElementById("entry-list").innerHTML=entries.slice(-10).reverse().map(e=>{
+    const c=e.compound||"other";
+    const type=TYPE_LABELS[e.type]||e.type||"";
+    const meta=[type,e.institution?e.institution.slice(0,44):null].filter(Boolean).join(" · ");
+    return `<div class="entry-simple"><div class="entry-simple-body"><div class="entry-simple-title"><a href="${e.url}" target="_blank" rel="noopener">${e.title.slice(0,92)}${e.title.length>92?"…":""}</a></div>${meta?`<div class="entry-simple-meta">${meta}</div>`:""}</div><span class="chip ${chip(c)}">${COMPOUND_LABELS[c]||c}</span></div>`;
+  }).join("");
+}).catch(()=>{
+  document.getElementById("entry-list").innerHTML='<div class="entry-simple"><div class="entry-simple-body"><div class="entry-simple-meta" style="color:var(--muted)">Open via HTTP server to load entries.</div></div></div>';
+});
+</script>
+</body>
+</html>

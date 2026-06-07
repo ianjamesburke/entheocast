@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Entheocast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="molecules.js"></script>
+  <style>
+    .about-layout { display: grid; grid-template-columns: 1fr 260px; gap: 4rem; align-items: start; }
+
+    .prose h2 { font-family: 'Syne',sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin: 2.5rem 0 0.6rem; }
+    .prose h2:first-child { margin-top: 0; }
+    .prose p { font-size: 0.88rem; color: var(--dim); line-height: 1.85; margin-bottom: 0.85rem; }
+    .prose a { color: var(--accent); text-decoration: none; }
+    .prose a:hover { text-decoration: underline; }
+
+    .byline {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .byline-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      flex-shrink: 0;
+      border: 2px solid var(--border);
+    }
+    .byline-name { font-size: 1rem; font-weight: 600; color: var(--text); }
+    .byline-role { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    .tier { border: 1px solid var(--border); border-radius: 5px; background: var(--surface); padding: 1rem 1.25rem; margin-bottom: 0.6rem; }
+    .tier-head { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.3rem; }
+    .tier-label { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+    .tier-name { font-size: 0.86rem; font-weight: 600; color: var(--text); }
+    .tier-desc { font-size: 0.8rem; color: var(--dim); line-height: 1.55; }
+
+    .schema-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 0.75rem; }
+    .schema-table th { text-align: left; padding: 0.45rem 0.75rem; background: var(--bg); border-bottom: 2px solid var(--border); font-size: 0.63rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .schema-table td { padding: 0.45rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .schema-table tr:last-child td { border-bottom: none; }
+    .schema-table .field { font-family: ui-monospace, monospace; font-size: 0.76rem; color: var(--accent); }
+    .schema-table .type { font-family: ui-monospace, monospace; font-size: 0.72rem; color: var(--muted); }
+    .schema-table .desc { color: var(--dim); }
+
+    .source-list { list-style: none; }
+    .source-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; color: var(--dim); }
+    .source-list li:last-child { border-bottom: none; }
+    .source-list .src { color: var(--text); font-weight: 500; }
+    .source-list .badge { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.12rem 0.4rem; border-radius: 3px; background: var(--bg); border: 1px solid var(--border); color: var(--muted); margin-left: 0.4rem; vertical-align: middle; }
+
+    .data-links a { display: block; font-size: 0.8rem; color: var(--accent); text-decoration: none; padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+    .data-links a:hover { text-decoration: underline; }
+    .data-links a:last-child { border-bottom: none; }
+  </style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="wordmark">ENTHEO<span class="dot">·</span>CAST</a>
+    <nav>
+      <a href="trials.html">Trials</a>
+      <a href="weekly/index.html">Weekly</a>
+      <a href="podcast.html">Podcast</a>
+      <a href="about.html" class="active">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-wrap">
+  <div class="about-layout">
+    <div class="prose">
+      <div class="page-heading">About</div>
+
+      <div class="byline">
+        <img class="byline-avatar" src="ian.png" alt="Ian Burke">
+        <div>
+          <div class="byline-name">Ian Burke</div>
+          <div class="byline-role">AI researcher &amp; engineer</div>
+        </div>
+      </div>
+
+      <p>I think the normalization of psychedelics in the Western world is one of the most interesting things to happen in our lifetime, and probably in a much longer arc than that.</p>
+
+      <p>There's reason to believe these substances were present at the origin of consciousness itself. Good evidence suggests they shaped the emergence of language, religion, and early democracy; the Eleusinian Mysteries in Athens are the most documented example. They've moved in and out of collective awareness as civilizations have needed them. They're doing it again now, re-entering the public eye as we transition toward something new: a civilization not organized around clashing tribes, but a connected people woven together through the internet.</p>
+
+      <p>That transition has growing pains. Pain that can be numbed with something over the counter, or healed at its root somewhere within the mind.</p>
+
+      <p>What makes this moment strange and a little absurd is watching these ancient tools get processed through the machinery of modern scientific rigor: studies, protocols, IRB approval, peer review. As if they need the credentials. They've always been with us. We're just being reintroduced, through the one framework our current civilization trusts.</p>
+
+      <p>This needs handling with care. A glass of wine can open a profound conversation with an old relative; four glasses can wrap your car around a tree. These tools can help people work through racism, grief, the fear of death, but they can also destabilize someone more profoundly than almost anything else in our pharmacopeia. That comes with the territory when a single encounter can take you somewhere that feels more real than life itself, and for two years afterward ordinary existence carries a different quality, because you've touched something that felt like it wrote the code.</p>
+
+      <p>That's not a warning. It's a description of what makes this the most genuinely interesting thing to ever happen.</p>
+
+      <p>I don't have formal training in pharmacology or clinical research. What I can do is build tools and celebrate the people in the trenches: the researchers, clinicians, and advocates fighting to get this phenomenon onto paper, against a system that has largely forgotten why it restricted these substances in the first place.</p>
+
+      <p>Entheocast is my love letter to them.</p>
+
+      <hr class="divider">
+
+      <h2>What this project is</h2>
+      <p>Entheocast aggregates psychedelic clinical trials, regulatory decisions, and peer-reviewed research into a single open dataset, updated weekly. The goal: a single place where a researcher, clinician, or policy-maker can see the state of the field without digging through PubMed, ClinicalTrials.gov, and a dozen news sources separately.</p>
+      <p>Everything is open data. The full dataset is available as <a href="data/entries.json">entries.json</a>. The pipeline that builds it is open source on <a href="https://github.com/ianjamesburke/entheocast">GitHub</a>.</p>
+
+      <p style="font-size:0.8rem;color:var(--muted);font-style:italic;">This is a personal project, not a medical resource. Do not use Entheocast for clinical decisions.</p>
+    </div>
+
+    <aside>
+      <div class="sidebar-block">
+        <div class="sidebar-label">Data Sources</div>
+        <ul class="source-list">
+          <li><span class="src">PubMed</span><br>Clinical research &amp; papers</li>
+          <li><span class="src">ClinicalTrials.gov</span><br>Active trial registrations</li>
+          <li><span class="src">Semantic Scholar</span><br>Academic papers</li>
+          <li><span class="src">bioRxiv / medRxiv</span><br>Preprints</li>
+          <li><span class="src">MAPS.org</span><br>Regulatory &amp; trial updates</li>
+          <li><span class="src">Chacruna Institute</span><br>Policy &amp; ethics</li>
+          <li><span class="src">Lucid News</span><br>Industry news</li>
+          <li><span class="src">Psychedelic Alpha</span><br>Business &amp; regulatory</li>
+          <li><span class="src">FDA.gov</span><br>Press releases</li>
+          <li><span class="src">General news</span><br>Broad Tavily queries</li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-label">Raw Data</div>
+        <div class="data-links">
+          <a href="data/entries.json">entries.json — full dataset</a>
+          <a href="data/weekly/2026-W23.json">2026-W23.json — latest weekly</a>
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-label">Get in Touch</div>
+        <p style="font-size:0.82rem;color:var(--dim);line-height:1.6;">Want to collaborate, contribute data, or just talk? <a href="contact.html" style="color:var(--accent);text-decoration:none;">Contact Ian →</a></p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <span>Entheocast · Open data · MIT License</span>
+  <span><a href="https://github.com/ianjamesburke/entheocast">GitHub</a> · <a href="data/entries.json">Raw JSON</a></span>
+</footer>
+</div>
+</body>
+</html>

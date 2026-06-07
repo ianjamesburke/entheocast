@@ -10,3 +10,9 @@ pipeline/.venv/
 dist/
 build/
 .DS_Store
+.plexi-beta/
+index-option-a.html
+index-option-b.html
+index-option-c.html
+index-poc.html
+index-h.html

@@ -81,25 +81,24 @@ No LLM needed. Direct JSON parsing, filter by compound keywords.
 
 **Style selection first.** Build 3 `index.html` variants, pick one, then build all pages.
 
-- [ ] **Style decision**
-  - [ ] `index-option-a.html` — clean academic (white, serif, Nature/Lancet vibes)
-  - [ ] `index-option-b.html` — dark modern (dark bg, monospace, neon accent)
-  - [ ] `index-option-c.html` — warm editorial (cream/tan, mixed serif+sans, earth tones)
-  - [ ] User picks style → apply to all pages
+- [x] **Style decision** — light cream bg, floating indole/naphthalene/benzene/pyridine ring SVGs, Syne 800 + Plus Jakarta Sans, violet accent #5b38d6. Iterated through A–H; H (light, molecular bg) chosen.
+  - [x] `index-option-a.html` — clean academic
+  - [x] `index-option-b.html` — dark modern
+  - [x] `index-option-c.html` — warm editorial
+  - [x] index-poc.html — D/E/F/G variants in switcher
+  - [x] index-h.html — final chosen style (light + molecules)
+  - [x] User picks style → H theme applied to all pages
 
-- [ ] **`style.css`** — single shared stylesheet (chosen style)
-- [ ] **`index.html`** — homepage: latest weekly issue summary, links to all sections
-- [ ] **`trials.html`** — full trials table
-  - [ ] Loads `data/entries.json`
-  - [ ] Filterable by: compound, phase, status, condition (vanilla JS)
-  - [ ] Sortable by date
-- [ ] **`script.js`** — filtering + sorting logic for trials table
-- [ ] **`weekly/index.html`** — list of all weekly issues (auto-generated)
-- [ ] **`podcast.html`** — "Coming Soon" page: intentional, not broken
-  - [ ] Brief description of what the podcast will be
-  - [ ] Subscribe placeholder
-  - [ ] Visual that communicates real-but-not-launched
-- [ ] **`about.html`** — what Entheocast is, methodology, data sources list, link to raw data
+- [x] **`style.css`** — single shared stylesheet (chosen style)
+- [x] **`index.html`** — homepage with spotlight, featured entries w/ AI summaries, live feed
+- [x] **`trials.html`** — full trials table
+  - [x] Loads `data/entries.json`
+  - [x] Filterable by: compound, type (vanilla JS)
+  - [x] Sortable by clicking column headers
+- [x] **`script.js`** — filtering + sorting logic inline in trials.html
+- [x] **`weekly/index.html`** — list of all weekly issues
+- [x] **`podcast.html`** — "Coming Soon" page with episode previews and email notify
+- [x] **`about.html`** — methodology, tier descriptions, schema table, data sources
 
 ---
 

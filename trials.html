@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trials — Entheocast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="molecules.js"></script>
+  <style>
+    .filter-bar {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-bar input, .filter-bar select {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.45rem 0.85rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .filter-bar input { flex: 1; min-width: 180px; }
+    .filter-bar input:focus, .filter-bar select:focus { border-color: var(--accent); }
+    .filter-bar select { cursor: pointer; }
+    .result-count { font-size: 0.75rem; color: var(--muted); margin-left: auto; white-space: nowrap; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    thead th {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      background: var(--surface);
+      border-bottom: 2px solid var(--border);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    thead th:hover { color: var(--text); }
+    thead th.sorted { color: var(--accent); }
+    thead th .sort-arrow { margin-left: 0.3rem; opacity: 0.5; font-size: 0.6rem; }
+    thead th.sorted .sort-arrow { opacity: 1; }
+
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+    tbody tr:hover { background: rgba(91,56,214,0.03); }
+    tbody td { padding: 0.7rem 0.75rem; vertical-align: top; }
+    .td-title { max-width: 400px; }
+    .td-title a { color: var(--text); text-decoration: none; line-height: 1.45; }
+    .td-title a:hover { color: var(--accent); }
+    .td-meta { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
+    .td-source { font-size: 0.75rem; color: var(--dim); }
+
+    .empty-state { padding: 3rem 1rem; text-align: center; color: var(--muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="wordmark">ENTHEO<span class="dot">·</span>CAST</a>
+    <nav>
+      <a href="trials.html" class="active">Trials</a>
+      <a href="weekly/index.html">Weekly</a>
+      <a href="podcast.html">Podcast</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-wrap">
+  <div class="page-heading">All Entries</div>
+  <p class="page-sub">Full dataset — <strong id="total-count">—</strong> entries from PubMed, ClinicalTrials.gov, Semantic Scholar, and curated sources. Filter and sort below.</p>
+
+  <div class="filter-bar">
+    <input type="text" id="filter-search" placeholder="Search titles…" oninput="render()">
+    <select id="filter-compound" onchange="render()">
+      <option value="">All compounds</option>
+      <option value="psilocybin">Psilocybin</option>
+      <option value="mdma">MDMA</option>
+      <option value="ketamine">Ketamine</option>
+      <option value="lsd">LSD</option>
+      <option value="dmt">DMT</option>
+      <option value="ibogaine">Ibogaine</option>
+      <option value="ayahuasca">Ayahuasca</option>
+      <option value="mescaline">Mescaline</option>
+      <option value="other">Other</option>
+    </select>
+    <select id="filter-type" onchange="render()">
+      <option value="">All types</option>
+      <option value="phase_1">Phase 1</option>
+      <option value="phase_2">Phase 2</option>
+      <option value="phase_3">Phase 3</option>
+      <option value="observational">Observational</option>
+      <option value="meta_analysis">Meta-analysis</option>
+      <option value="regulatory">Regulatory</option>
+      <option value="news">News</option>
+      <option value="preprint">Preprint</option>
+    </select>
+    <span class="result-count" id="result-count"></span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th onclick="sort('title')" id="th-title">Title <span class="sort-arrow">↕</span></th>
+        <th onclick="sort('compound')" id="th-compound">Compound <span class="sort-arrow">↕</span></th>
+        <th onclick="sort('type')" id="th-type">Type <span class="sort-arrow">↕</span></th>
+        <th onclick="sort('institution')" id="th-source">Source <span class="sort-arrow">↕</span></th>
+      </tr>
+    </thead>
+    <tbody id="tbody">
+      <tr><td colspan="4" class="empty-state">Loading…</td></tr>
+    </tbody>
+  </table>
+</main>
+
+<footer>
+  <span>Entheocast · Open data · MIT</span>
+  <span><a href="https://github.com/ianjamesburke/entheocast">GitHub</a> · <a href="data/entries.json">Raw JSON</a></span>
+</footer>
+</div>
+
+<script>
+const COMPOUND_LABELS = { psilocybin:"Psilocybin", mdma:"MDMA", ketamine:"Ketamine", lsd:"LSD", dmt:"DMT", ibogaine:"Ibogaine", ayahuasca:"Ayahuasca", mescaline:"Mescaline", other:"Other" };
+const TYPE_LABELS = { phase_1:"Phase 1", phase_2:"Phase 2", phase_3:"Phase 3", observational:"Observational", meta_analysis:"Meta-analysis", regulatory:"Regulatory", news:"News", preprint:"Preprint" };
+const chip = c => ["psilocybin","mdma","ketamine","lsd","dmt","ibogaine","ayahuasca","mescaline"].includes(c) ? c : "other";
+
+let allEntries = [];
+let sortCol = null;
+let sortAsc = true;
+
+fetch("data/entries.json").then(r=>r.json()).then(data=>{
+  allEntries = data;
+  document.getElementById("total-count").textContent = data.length;
+  render();
+}).catch(()=>{
+  document.getElementById("tbody").innerHTML='<tr><td colspan="4" class="empty-state">Could not load entries — open via HTTP server.</td></tr>';
+});
+
+function sort(col) {
+  if (sortCol === col) { sortAsc = !sortAsc; } else { sortCol = col; sortAsc = true; }
+  document.querySelectorAll("thead th").forEach(th => th.classList.remove("sorted"));
+  const th = document.getElementById("th-"+col) || document.querySelector(`[onclick="sort('${col}')"]`);
+  if (th) {
+    th.classList.add("sorted");
+    th.querySelector(".sort-arrow").textContent = sortAsc ? "↑" : "↓";
+  }
+  render();
+}
+
+function render() {
+  const q = document.getElementById("filter-search").value.toLowerCase();
+  const compound = document.getElementById("filter-compound").value;
+  const type = document.getElementById("filter-type").value;
+
+  let filtered = allEntries.filter(e => {
+    if (compound && (e.compound||"other") !== compound) return false;
+    if (type && e.type !== type) return false;
+    if (q && !e.title.toLowerCase().includes(q) && !(e.institution||"").toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  if (sortCol) {
+    filtered.sort((a,b) => {
+      const va = (a[sortCol]||"").toLowerCase();
+      const vb = (b[sortCol]||"").toLowerCase();
+      return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+    });
+  }
+
+  document.getElementById("result-count").textContent = `${filtered.length} result${filtered.length!==1?"s":""}`;
+
+  if (!filtered.length) {
+    document.getElementById("tbody").innerHTML='<tr><td colspan="4" class="empty-state">No entries match your filters.</td></tr>';
+    return;
+  }
+
+  document.getElementById("tbody").innerHTML = filtered.map(e => {
+    const c = e.compound||"other";
+    const typeLabel = TYPE_LABELS[e.type]||e.type||"—";
+    const source = e.source || (e.institution ? e.institution.slice(0,40) : "—");
+    return `<tr>
+      <td class="td-title">
+        <a href="${e.url}" target="_blank" rel="noopener">${e.title.slice(0,95)}${e.title.length>95?"…":""}</a>
+        ${e.status ? `<div class="td-meta">${e.status}</div>` : ""}
+      </td>
+      <td><span class="chip ${chip(c)}">${COMPOUND_LABELS[c]||c}</span></td>
+      <td><span class="type-chip">${typeLabel}</span></td>
+      <td class="td-source">${source}</td>
+    </tr>`;
+  }).join("");
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Issues — Entheocast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script defer src="../molecules.js"></script>
+  <style>
+    .issue-row {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+    }
+    .issue-row:last-child { border-bottom: none; }
+    .issue-row:hover .issue-row-title { color: var(--accent); }
+    .issue-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--accent);
+      min-width: 3.5rem;
+      opacity: 0.7;
+    }
+    .issue-row-body { flex: 1; }
+    .issue-row-title { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; transition: color 0.15s; }
+    .issue-row-meta { font-size: 0.72rem; color: var(--muted); }
+    .issue-row-cta { font-size: 0.72rem; font-weight: 600; color: var(--accent); }
+  </style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="wordmark">ENTHEO<span class="dot">·</span>CAST</a>
+    <nav>
+      <a href="../trials.html">Trials</a>
+      <a href="../weekly/index.html" class="active">Weekly</a>
+      <a href="../podcast.html">Podcast</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-wrap" style="max-width:720px">
+  <div class="page-heading">Weekly Issues</div>
+  <p class="page-sub">Every Sunday: new entries, regulatory updates, and research summaries. Generated automatically from the pipeline — no editorial prose added.</p>
+
+  <div class="section-label">2026</div>
+
+  <a href="2026-W23.html" class="issue-row">
+    <div class="issue-num">W23</div>
+    <div class="issue-row-body">
+      <div class="issue-row-title">June 1–7, 2026</div>
+      <div class="issue-row-meta">291 entries · 9 compounds · psilocybin, ketamine, MDMA and more</div>
+    </div>
+    <div class="issue-row-cta">Read →</div>
+  </a>
+
+  <p style="font-size:0.78rem;color:var(--muted);margin-top:2rem;line-height:1.6;">
+    New issues are generated automatically every Sunday at 8pm ET via GitHub Actions.
+    The pipeline fetches from PubMed, ClinicalTrials.gov, and curated sources, then writes
+    a weekly snapshot to <code style="font-size:0.72rem">data/weekly/</code> and generates this HTML.
+  </p>
+</main>
+
+<footer>
+  <span>Entheocast · Open data · MIT</span>
+  <span><a href="https://github.com/ianjamesburke/entheocast">GitHub</a></span>
+</footer>
+</div>
+</body>
+</html>

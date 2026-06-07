@@ -1,0 +1,152 @@
+/* ── Reset & variables ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f7f5f2;
+  --surface: #ffffff;
+  --border: #e4dff0;
+  --border-strong: #c0b8d8;
+  --text: #1c1830;
+  --dim: #4a4668;
+  --muted: #9490b0;
+  --accent: #5b38d6;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Floating molecular background ──
+   Molecules: serotonin (5-HT), indole, naphthalene, benzene, pyridine
+   Each drifts/rotates slowly at low opacity against the cream background.         */
+.mol-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.mol { position: absolute; }
+
+/* ── Page wrapper ── */
+.page { position: relative; z-index: 1; }
+
+/* ── Header ── */
+header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(247,245,242,0.96);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 1.2rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wordmark {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  text-decoration: none;
+}
+.wordmark .dot { color: var(--accent); }
+nav { display: flex; gap: 1.75rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em; }
+nav a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+nav a:hover, nav a.active { color: var(--text); }
+
+/* ── Main wrapper ── */
+.main-wrap { max-width: 1060px; margin: 0 auto; padding: 2.5rem 2rem 6rem; }
+
+/* ── Page heading ── */
+.page-heading { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.65rem; color: var(--text); margin-bottom: 0.4rem; }
+.page-sub { font-size: 0.84rem; color: var(--dim); margin-bottom: 2rem; }
+.page-sub strong { color: var(--text); font-weight: 600; }
+
+/* ── Section label ── */
+.section-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+/* ── Compound chips ── */
+.chip {
+  display: inline-block;
+  padding: 0.18rem 0.52rem;
+  border-radius: 4px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.chip.psilocybin { background: #ede9fe; color: #5b21b6; }
+.chip.mdma       { background: #fce7f3; color: #9d174d; }
+.chip.ketamine   { background: #dbeafe; color: #1e40af; }
+.chip.lsd        { background: #d1fae5; color: #065f46; }
+.chip.dmt        { background: #fef3c7; color: #92400e; }
+.chip.ibogaine   { background: #ccfbf1; color: #134e4a; }
+.chip.ayahuasca  { background: #fef9c3; color: #713f12; }
+.chip.mescaline  { background: #fee2e2; color: #991b1b; }
+.chip.other      { background: #f3f4f6; color: #374151; }
+
+.type-chip {
+  display: inline-block;
+  padding: 0.18rem 0.52rem;
+  border-radius: 4px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: var(--bg);
+  color: var(--dim);
+  border: 1px solid var(--border);
+}
+
+/* ── Sidebar ── */
+.sidebar-block { margin-bottom: 2.5rem; }
+.sidebar-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+.cbar { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.65rem; }
+.cbar-name { width: 72px; font-size: 0.72rem; color: var(--dim); }
+.cbar-track { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.cbar-fill { height: 100%; background: var(--accent); border-radius: 2px; opacity: 0.55; }
+.cbar-count { font-size: 0.68rem; color: var(--muted); min-width: 22px; text-align: right; }
+
+/* ── View-all link ── */
+.view-all { margin-top: 1.25rem; font-size: 0.76rem; }
+.view-all a { color: var(--accent); text-decoration: none; }
+.view-all a:hover { text-decoration: underline; }
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.25rem 2rem;
+  max-width: 1060px;
+  margin: 0 auto;
+  font-size: 0.7rem;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+}
+footer a { color: var(--muted); text-decoration: none; }
+footer a:hover { color: var(--text); }

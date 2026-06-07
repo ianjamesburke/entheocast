@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Entheocast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="molecules.js"></script>
+  <style>
+    .contact-wrap {
+      max-width: 520px;
+      margin: 5rem auto 6rem;
+      padding: 0 2rem;
+    }
+    .contact-intro {
+      font-size: 0.9rem;
+      color: var(--dim);
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+    }
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-row:first-of-type { border-top: 1px solid var(--border); }
+    .contact-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      color: var(--dim);
+    }
+    .contact-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
+    .contact-value { font-size: 0.88rem; color: var(--text); }
+    .contact-value a { color: var(--accent); text-decoration: none; }
+    .contact-value a:hover { text-decoration: underline; }
+    .contact-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="wordmark">ENTHEO<span class="dot">·</span>CAST</a>
+    <nav>
+      <a href="trials.html">Trials</a>
+      <a href="weekly/index.html">Weekly</a>
+      <a href="podcast.html">Podcast</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="contact-wrap">
+    <div class="page-heading">Contact</div>
+
+    <p class="contact-intro">Want to contribute data, flag a missing source, suggest a study worth tracking, or just talk about the research? Get in touch.</p>
+
+    <div class="contact-row">
+      <div class="contact-icon">@</div>
+      <div>
+        <div class="contact-label">Email</div>
+        <div class="contact-value"><a href="mailto:adhdisntreal@gmail.com">adhdisntreal@gmail.com</a></div>
+      </div>
+    </div>
+    <div class="contact-row">
+      <div class="contact-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+        </svg>
+      </div>
+      <div>
+        <div class="contact-label">GitHub</div>
+        <div class="contact-value"><a href="https://github.com/ianjamesburke/entheocast" target="_blank" rel="noopener">ianjamesburke/entheocast</a></div>
+      </div>
+    </div>
+
+    <p class="contact-note">I read everything. Response time varies — I'm one person and the dataset doesn't run itself.</p>
+  </div>
+</main>
+
+<footer>
+  <span>Entheocast · Open data · MIT</span>
+  <span><a href="https://github.com/ianjamesburke/entheocast">GitHub</a></span>
+</footer>
+</div>
+</body>
+</html>
