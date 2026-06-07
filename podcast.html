@@ -38,109 +38,6 @@
       line-height: 1.75;
       margin-bottom: 2rem;
     }
-    .cs-format {
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--surface);
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 2rem;
-    }
-    .cs-format-label {
-      font-size: 0.63rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.85rem;
-    }
-    .cs-format ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-    }
-    .cs-format li {
-      font-size: 0.84rem;
-      color: var(--dim);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.65rem;
-      line-height: 1.5;
-    }
-    .cs-format li::before {
-      content: "·";
-      color: var(--accent);
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 0.05rem;
-    }
-    .notify-form {
-      display: flex;
-      gap: 0.5rem;
-    }
-    .notify-form input {
-      flex: 1;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.82rem;
-      color: var(--text);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      padding: 0.6rem 1rem;
-      outline: none;
-      transition: border-color 0.15s;
-    }
-    .notify-form input:focus { border-color: var(--accent); }
-    .notify-form input::placeholder { color: var(--muted); }
-    .notify-btn {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      padding: 0.6rem 1.25rem;
-      cursor: pointer;
-      transition: opacity 0.15s;
-      white-space: nowrap;
-    }
-    .notify-btn:hover { opacity: 0.88; }
-    .notify-note { font-size: 0.72rem; color: var(--muted); margin-top: 0.6rem; }
-    .ep-preview {
-      margin-top: 2.5rem;
-      border-top: 1px solid var(--border);
-      padding-top: 1.75rem;
-    }
-    .ep-preview-label {
-      font-size: 0.63rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 1rem;
-    }
-    .ep-stub {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--border);
-      opacity: 0.45;
-    }
-    .ep-stub:last-child { border-bottom: none; }
-    .ep-num {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      color: var(--accent);
-      min-width: 2.5rem;
-    }
-    .ep-stub-body { flex: 1; }
-    .ep-stub-title { font-size: 0.86rem; font-weight: 500; color: var(--text); margin-bottom: 0.15rem; }
-    .ep-stub-meta { font-size: 0.72rem; color: var(--muted); }
-    .ep-stub-lock { font-size: 0.68rem; color: var(--muted); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
   </style>
 </head>
 <body>
@@ -162,18 +59,6 @@
   <div class="coming-soon-wrap">
     <div class="cs-label">Coming Soon</div>
     <h1 class="cs-title">The Entheocast Podcast</h1>
-    <p class="cs-body">A research-first audio series on psychedelic medicine. Each episode goes deep on a single study, trial, or regulatory development — with the researchers, clinicians, and policy experts who are doing the work.</p>
-
-    <div class="cs-format">
-      <div class="cs-format-label">What to expect</div>
-      <ul>
-        <li>Weekly 30-minute episodes tied to the same data as the tracker</li>
-        <li>Trial readouts with the principal investigators</li>
-        <li>Regulatory analysis — FDA, DEA, EMA, Health Canada</li>
-        <li>Compound deep-dives: mechanism, pharmacology, clinical evidence</li>
-        <li>No wellness hype. No trip reports. Peer-reviewed sources only.</li>
-      </ul>
-    </div>
 
   </div>
 </main>
