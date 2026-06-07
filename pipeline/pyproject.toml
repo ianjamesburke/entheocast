@@ -8,4 +8,5 @@ dependencies = [
     "tavily-python",
     "openai",
     "python-dotenv",
+    "jinja2",
 ]

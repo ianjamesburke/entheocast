@@ -88,77 +88,43 @@
     <div>
 
       <div class="issue-block">
-        <div class="issue-kicker">Week 23 · June 2026</div>
-        <div class="issue-date">June 2026</div>
-        <p class="issue-desc"><strong id="stat-entries">753</strong> entries tracked — updated every Sunday.</p>
-        <a href="weekly/2026-W23.html" class="issue-cta">Read this week's full issue →</a>
+        <div class="issue-kicker">Week {{ week_num }} · {{ month_year }}</div>
+        <div class="issue-date">{{ month_year }}</div>
+        <p class="issue-desc"><strong id="stat-entries">{{ total }}</strong> entries tracked — updated every Sunday.</p>
+        <a href="weekly/{{ week_key }}.html" class="issue-cta">Read this week's full issue →</a>
       </div>
 
-      
+      {% if spotlight %}
       <div class="spotlight">
-        <div class="spotlight-flag">Regulatory · U.S. Food and Drug Administration</div>
-        <h3>RFK, Jr., puts psychedelics on fast track to FDA review and approval</h3>
-        
-        <p>The FDA announced it is fast-tracking review and approval for three companies studying psilocybin and methylone for depression and PTSD, and approved a phase 1 clinical trial of noribogaine for alcohol use disorder.</p>
-        
-        <a href="https://www.scientificamerican.com/article/rfk-jr-puts-psychedelics-on-fast-track-to-fda-review-and-approval" target="_blank" rel="noopener" class="spotlight-link">Read on General News →</a>
+        <div class="spotlight-flag">{{ type_labels.get(spotlight.type, spotlight.type) }}{% if spotlight.compound and spotlight.compound != 'other' %} · {{ compound_labels.get(spotlight.compound, spotlight.compound) }}{% elif spotlight.institution %} · {{ spotlight.institution.split('/')[0].strip() }}{% endif %}</div>
+        <h3>{{ spotlight.title }}</h3>
+        {% if spotlight.outcome_summary %}
+        <p>{{ spotlight.outcome_summary }}</p>
+        {% endif %}
+        <a href="{{ spotlight.url }}" target="_blank" rel="noopener" class="spotlight-link">Read on {{ spotlight.source }} →</a>
       </div>
-      
+      {% endif %}
 
       <div class="section-label">Featured This Week</div>
 
-      
+      {% for entry in featured %}
       <div class="entry-card">
         <div class="entry-top">
           <div>
-            <div class="entry-h"><a href="https://www.hopkinsmedicine.org/psychiatry/research/psychedelics-research" target="_blank" rel="noopener">Johns Hopkins Center for Psychedelic and Consciousness Research</a></div>
-            <div class="entry-source">General News · 2026-06-07</div>
+            <div class="entry-h"><a href="{{ entry.url }}" target="_blank" rel="noopener">{{ entry.title }}</a></div>
+            <div class="entry-source">{{ entry.source }}{% if entry.date %} · {{ entry.date }}{% endif %}</div>
           </div>
           <div class="entry-badges">
-            <span class="chip psilocybin">Psilocybin</span>
-            <span class="type-chip">Observational</span>
+            <span class="chip {{ entry.compound or 'other' }}">{{ compound_labels.get(entry.compound, 'Other') }}</span>
+            {% if entry.type in type_labels %}<span class="type-chip">{{ type_labels[entry.type] }}</span>{% endif %}
           </div>
         </div>
-        
-        <div class="entry-summary">The center focuses on exploring psilocybin for various psychiatric and behavioral disorders, with demonstrated safety in regulated settings and potential benefits for anxiety in cancer patients and smoking cessation.</div>
-        
-        <div class="entry-footer"><a href="https://www.hopkinsmedicine.org/psychiatry/research/psychedelics-research" target="_blank" rel="noopener" class="source-link">Read on General News →</a></div>
+        {% if entry.outcome_summary %}
+        <div class="entry-summary">{{ entry.outcome_summary }}</div>
+        {% endif %}
+        <div class="entry-footer"><a href="{{ entry.url }}" target="_blank" rel="noopener" class="source-link">Read on {{ entry.source }} →</a></div>
       </div>
-      
-      <div class="entry-card">
-        <div class="entry-top">
-          <div>
-            <div class="entry-h"><a href="https://missouriindependent.com/2026/06/03/va-clinical-trial-on-psychedelic-assisted-therapy-gives-missouri-lawmakers-hope" target="_blank" rel="noopener">VA clinical trial on psychedelic-assisted therapy gives Missouri lawmakers hope</a></div>
-            <div class="entry-source">General News · 2026-06-07</div>
-          </div>
-          <div class="entry-badges">
-            <span class="chip mdma">MDMA</span>
-            <span class="type-chip">Phase 2</span>
-          </div>
-        </div>
-        
-        <div class="entry-summary">The VA launched a new randomized controlled trial of MDMA-assisted therapy for PTSD and alcohol use disorder in U.S. veterans; it will enroll approximately 80 veterans and compare outcomes between those receiving MDMA-assisted therapy and a control group.</div>
-        
-        <div class="entry-footer"><a href="https://missouriindependent.com/2026/06/03/va-clinical-trial-on-psychedelic-assisted-therapy-gives-missouri-lawmakers-hope" target="_blank" rel="noopener" class="source-link">Read on General News →</a></div>
-      </div>
-      
-      <div class="entry-card">
-        <div class="entry-top">
-          <div>
-            <div class="entry-h"><a href="https://maps.org/2026/04/23/maps-celebrates-40-years-at-a-defining-moment-for-psychedelics/" target="_blank" rel="noopener">MAPS Celebrates 40 Years at a Defining Moment for Psychedelics</a></div>
-            <div class="entry-source">MAPS.org · Thu, 23 Ap</div>
-          </div>
-          <div class="entry-badges">
-            <span class="chip other">Other</span>
-            <span class="type-chip">News</span>
-          </div>
-        </div>
-        
-        <div class="entry-summary">MAPS marks its 40th anniversary, having raised more than $150 million, supported 45 studies, trained 500+ therapists, and contributed to the first NDA submission for a psychedelic-assisted therapy. The organization also notes a new federal Executive Order directing agencies to expand psychedelic research and accelerate regulatory approval.</div>
-        
-        <div class="entry-footer"><a href="https://maps.org/2026/04/23/maps-celebrates-40-years-at-a-defining-moment-for-psychedelics/" target="_blank" rel="noopener" class="source-link">Read on MAPS.org →</a></div>
-      </div>
-      
+      {% endfor %}
 
       <div class="section-label" style="margin-top:2rem">More from the Feed</div>
       <div id="entry-list">

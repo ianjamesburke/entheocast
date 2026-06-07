@@ -154,6 +154,9 @@ def main() -> None:
     save_entries(all_entries)
     print(f"\nTotal entries: {len(all_entries)} (+{len(new_entries)} new)")
 
+    from build import build as build_site
+    build_site()
+
 
 if __name__ == "__main__":
     main()
