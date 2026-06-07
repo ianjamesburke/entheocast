@@ -11,6 +11,9 @@
   <script defer src="molecules.js"></script>
   <style>
     .about-layout { display: grid; grid-template-columns: 1fr 260px; gap: 4rem; align-items: start; }
+    @media (max-width: 768px) {
+      .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
 
     .prose h2 { font-family: 'Syne',sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin: 2.5rem 0 0.6rem; }
     .prose h2:first-child { margin-top: 0; }
