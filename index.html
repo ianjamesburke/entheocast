@@ -11,6 +11,10 @@
   <script defer src="molecules.js"></script>
   <style>
     .layout { display: grid; grid-template-columns: 1fr 240px; gap: 4rem; align-items: start; }
+    @media (max-width: 768px) {
+      .layout { grid-template-columns: 1fr; gap: 2rem; }
+      .issue-date { font-size: 1.3rem; }
+    }
 
     /* Issue hero */
     .issue-block { position: relative; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); overflow: hidden; }
