@@ -42,19 +42,13 @@ No LLM needed. Direct JSON parsing, filter by compound keywords.
 
 ## Phase 3 — Pipeline: Tier 2 (RSS + Jina Reader + Mimo)
 
-- [ ] `pipeline/jina.py` — Jina Reader wrapper: `GET https://r.jina.ai/<url>` → full text
-- [ ] `pipeline/mimo.py` — OpenRouter/Mimo wrapper: extract schema fields from full article text; prompt enforces extraction-only (no editorializing)
-- [ ] **MAPS.org** (`pipeline/sources/maps.py`)
-  - [ ] Parse `https://maps.org/feed/`
-  - [ ] Jina fetch each item
-  - [ ] Mimo extraction → schema
-- [ ] **Chacruna Institute** (`pipeline/sources/chacruna.py`)
-  - [ ] Parse `https://chacruna.net/feed/`
-  - [ ] Jina + Mimo extraction
-- [ ] **Lucid News** (`pipeline/sources/lucid_news.py`)
-  - [ ] Parse `https://www.lucid.news/feed/`
-  - [ ] Jina + Mimo extraction
-- [ ] Integration test: run Tier 2 against live feeds, validate entries append correctly
+- [x] `pipeline/jina.py` — Jina Reader wrapper: `GET https://r.jina.ai/<url>` → full text (via subprocess curl)
+- [x] `pipeline/mimo.py` — OpenRouter wrapper using `moonshotai/kimi-k2.6:free`; extract schema fields; prompt enforces extraction-only
+- [x] **MAPS.org** (`pipeline/sources/maps.py`)
+- [x] **Chacruna Institute** (`pipeline/sources/chacruna.py`)
+- [x] **Lucid News** (`pipeline/sources/lucid_news.py`)
+- [x] `pipeline/sources/rss_base.py` — shared RSS+Jina+Mimo fetch loop
+- [x] Integration test: 7 new entries from 2-month window across 3 RSS sources
 
 ---
 

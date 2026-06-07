@@ -57,17 +57,56 @@ def run_tier1(start_date: str | None = None) -> list[dict]:
     return all_new
 
 
+def run_tier2(start_date: str | None = None) -> list[dict]:
+    from sources.maps import fetch as maps_fetch
+    from sources.chacruna import fetch as chacruna_fetch
+    from sources.lucid_news import fetch as lucid_fetch
+    from dedup import filter_new
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    tasks = {
+        "MAPS.org": lambda: maps_fetch(min_date=start_date),
+        "Chacruna Institute": lambda: chacruna_fetch(min_date=start_date),
+        "Lucid News": lambda: lucid_fetch(min_date=start_date),
+    }
+
+    results: dict[str, list[dict]] = {}
+    print("Fetching all Tier 2 sources in parallel...")
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        futures = {pool.submit(fn): name for name, fn in tasks.items()}
+        for future in as_completed(futures):
+            name = futures[future]
+            try:
+                results[name] = future.result()
+                print(f"  {name}: {len(results[name])} entries fetched")
+            except Exception as e:
+                print(f"  {name} error: {e}", file=sys.stderr)
+                results[name] = []
+
+    all_new = []
+    for name in tasks:
+        new = filter_new(results.get(name, []))
+        print(f"  {name}: {len(new)} new after dedup")
+        all_new.extend(new)
+
+    return all_new
+
+
 def main() -> None:
     import argparse
     parser = argparse.ArgumentParser(description="Entheocast pipeline")
     parser.add_argument("--since", help="Start date YYYY-MM-DD (backfill)")
-    parser.add_argument("--tier", type=int, default=1, help="Max tier to run (1, 2, or 3)")
+    parser.add_argument("--tier", type=int, default=2, help="Max tier to run (1, 2, or 3)")
     args = parser.parse_args()
 
     existing = load_existing()
     print(f"Existing entries: {len(existing)}")
 
-    new_entries = run_tier1(start_date=args.since)
+    new_entries: list[dict] = []
+    new_entries.extend(run_tier1(start_date=args.since))
+
+    if args.tier >= 2:
+        new_entries.extend(run_tier2(start_date=args.since))
 
     all_entries = existing + new_entries
     save_entries(all_entries)
