@@ -1,8 +1,13 @@
 import json
 import os
+import threading
+import time
 from openai import OpenAI
 
 _client: OpenAI | None = None
+_rate_lock = threading.Lock()
+_last_call_time = 0.0
+_MIN_INTERVAL = 4.0  # 15 calls/min — safely under free tier 20/min limit
 
 SCHEMA_PROMPT = """Extract structured data from this article. Return JSON with exactly these fields:
 - title: string (article title)
@@ -28,9 +33,20 @@ def _get_client() -> OpenAI:
     return _client
 
 
+def _throttle() -> None:
+    global _last_call_time
+    with _rate_lock:
+        now = time.monotonic()
+        wait = _MIN_INTERVAL - (now - _last_call_time)
+        if wait > 0:
+            time.sleep(wait)
+        _last_call_time = time.monotonic()
+
+
 def extract(article_text: str, url: str) -> dict | None:
     """Extract schema fields from article text via Mimo on OpenRouter."""
     truncated = article_text[:4000]
+    _throttle()
     try:
         resp = _get_client().chat.completions.create(
             model="moonshotai/kimi-k2.6:free",
@@ -43,7 +59,6 @@ def extract(article_text: str, url: str) -> dict | None:
             max_tokens=512,
         )
         raw = resp.choices[0].message.content or ""
-        # strip markdown fences if model wrapped output
         raw = raw.strip()
         if raw.startswith("```"):
             raw = raw.split("```")[1]

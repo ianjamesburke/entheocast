@@ -54,13 +54,14 @@ No LLM needed. Direct JSON parsing, filter by compound keywords.
 
 ## Phase 4 — Pipeline: Tier 3 (Tavily + Jina + Mimo)
 
-- [ ] `pipeline/tavily.py` — Tavily search wrapper; returns URLs + snippets
-- [ ] **Psychedelic Alpha** — Tavily search `site:psychedelicalpha.com`, Jina + Mimo
-- [ ] **FDA Press Releases** — Tavily search `site:fda.gov psychedelic OR psilocybin OR MDMA`, Jina + Mimo
-- [ ] **Compass Pathways** — Tavily search `site:compasspathways.com`, Jina + Mimo
-- [ ] **Atai Life Sciences** — Tavily search `site:atai.life`, Jina + Mimo
-- [ ] **General News** — 4 broad Tavily queries from PRD, Jina + Mimo
-- [ ] Integration test: full Tier 3 run, check for duplication against Tier 1/2 entries
+- [x] `pipeline/tavily_client.py` — Tavily search wrapper; returns URLs + snippets (named tavily_client.py to avoid shadowing installed tavily package)
+- [x] `pipeline/sources/tavily_base.py` — shared Tavily+Jina+Mimo loop; filters PDFs/social/non-article URLs; global 4s/call rate limiter in mimo.py prevents 429s
+- [x] **Psychedelic Alpha** — Tavily search `site:psychedelicalpha.com`, Jina + Mimo
+- [x] **FDA Press Releases** — Tavily search `site:fda.gov psychedelic OR psilocybin OR MDMA`, Jina + Mimo
+- [x] **Compass Pathways** — Tavily search `site:compasspathways.com`, Jina + Mimo
+- [x] **Atai Life Sciences** — Tavily search `site:atai.life`, Jina + Mimo
+- [x] **General News** — 4 broad Tavily queries from PRD, Jina + Mimo
+- [x] Integration test: 278 total entries, 0 duplicate IDs/URLs across all tiers. FDA/Compass/Atai return 0 (substance DBs + PDFs filtered; content captured by PubMed Tier 1). Global 4s/call throttle prevents 429s.
 
 ---
 

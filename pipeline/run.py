@@ -92,6 +92,45 @@ def run_tier2(start_date: str | None = None) -> list[dict]:
     return all_new
 
 
+def run_tier3(start_date: str | None = None) -> list[dict]:
+    from sources.psychedelic_alpha import fetch as alpha_fetch
+    from sources.fda import fetch as fda_fetch
+    from sources.compass import fetch as compass_fetch
+    from sources.atai import fetch as atai_fetch
+    from sources.general_news import fetch as news_fetch
+    from dedup import filter_new
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    tasks = {
+        "Psychedelic Alpha": lambda: alpha_fetch(min_date=start_date),
+        "FDA Press Releases": lambda: fda_fetch(min_date=start_date),
+        "Compass Pathways": lambda: compass_fetch(min_date=start_date),
+        "Atai Life Sciences": lambda: atai_fetch(min_date=start_date),
+        "General News": lambda: news_fetch(min_date=start_date),
+    }
+
+    results: dict[str, list[dict]] = {}
+    print("Fetching all Tier 3 sources in parallel...")
+    with ThreadPoolExecutor(max_workers=5) as pool:
+        futures = {pool.submit(fn): name for name, fn in tasks.items()}
+        for future in as_completed(futures):
+            name = futures[future]
+            try:
+                results[name] = future.result()
+                print(f"  {name}: {len(results[name])} entries fetched")
+            except Exception as e:
+                print(f"  {name} error: {e}", file=sys.stderr)
+                results[name] = []
+
+    all_new = []
+    for name in tasks:
+        new = filter_new(results.get(name, []))
+        print(f"  {name}: {len(new)} new after dedup")
+        all_new.extend(new)
+
+    return all_new
+
+
 def main() -> None:
     import argparse
     parser = argparse.ArgumentParser(description="Entheocast pipeline")
@@ -107,6 +146,9 @@ def main() -> None:
 
     if args.tier >= 2:
         new_entries.extend(run_tier2(start_date=args.since))
+
+    if args.tier >= 3:
+        new_entries.extend(run_tier3(start_date=args.since))
 
     all_entries = existing + new_entries
     save_entries(all_entries)
