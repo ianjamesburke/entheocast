@@ -42,7 +42,7 @@
     el.innerHTML = SVG;
     layer.appendChild(el);
 
-    const speed = 14 + Math.random() * 22;
+    const speed = 10 + Math.random() * 16;
     const dir   = Math.random() * Math.PI * 2;
 
     particles.push({
