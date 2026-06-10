@@ -2,7 +2,7 @@
 
 Psychedelic clinical trials, regulatory updates, and research aggregated weekly into a structured open dataset. Live at [ianjamesburke.github.io/entheocast](https://ianjamesburke.github.io/entheocast).
 
-Runs every Sunday night via GitHub Actions. No editorial prose. Raw structured data from primary sources.
+GitHub Actions runs the pipeline every Sunday night. Data, not commentary.
 
 ## Sources
 
