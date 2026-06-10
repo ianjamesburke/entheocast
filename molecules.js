@@ -2,7 +2,7 @@
   const COUNT  = 16;
   const W_MOL  = 230;   // element width px
   const RADIUS = 56;    // collision radius px
-  const COLOR  = 'rgba(35,15,120,0.10)';
+  const COLOR  = 'rgba(35,15,120,0.08)';
 
   const SVG = `<svg viewBox="0 0 200 130" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <!-- Benzene ring -->
