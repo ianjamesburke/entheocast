@@ -1,6 +1,5 @@
 from datetime import date, datetime
 from dedup import make_id
-import jina
 import mimo
 import tavily_client as tavily
 
@@ -67,14 +66,9 @@ def fetch_tavily(queries: list[str], source_name: str, min_date: str | None = No
             if not _is_relevant(r["title"] + " " + r["content"]):
                 continue
 
-            try:
-                text = jina.fetch_text(url)
-            except Exception as e:
-                print(f"{source_name}: Jina error for {url}: {e}")
-                continue
-
+            text = r.get("raw_content") or r.get("content") or ""
             if not _is_real_article(text):
-                print(f"{source_name}: skipping bot-challenge page {url}")
+                print(f"{source_name}: skipping empty/bot-challenge page {url}")
                 continue
             extracted = mimo.extract(text, url)
             if not extracted:

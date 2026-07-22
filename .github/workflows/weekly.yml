@@ -27,7 +27,7 @@ jobs:
         env:
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-        run: uv run python run.py
+        run: uv run python run.py --tier 3
 
       - name: Commit updated data and weekly files
         run: |

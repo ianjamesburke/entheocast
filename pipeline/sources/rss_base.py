@@ -1,7 +1,6 @@
 from datetime import date
 import feedparser
 from dedup import make_id
-import jina
 import mimo
 
 COMPOUND_KEYWORDS = ["psilocybin", "mdma", "lsd", "ketamine", "dmt", "ibogaine", "ayahuasca", "mescaline"]
@@ -10,6 +9,13 @@ COMPOUND_KEYWORDS = ["psilocybin", "mdma", "lsd", "ketamine", "dmt", "ibogaine",
 def _is_relevant(text: str) -> bool:
     t = text.lower()
     return any(k in t for k in COMPOUND_KEYWORDS)
+
+
+def _article_text(item) -> str:
+    """Full post body from the feed's content:encoded, falling back to summary."""
+    if item.get("content"):
+        return item.content[0].value or ""
+    return item.get("summary", "") or item.get("description", "")
 
 
 def fetch_rss(feed_url: str, source_name: str, min_date: str | None = None) -> list[dict]:
@@ -24,14 +30,8 @@ def fetch_rss(feed_url: str, source_name: str, min_date: str | None = None) -> l
         if min_date and pub_date < min_date:
             continue
 
-        summary = item.get("summary", "") or item.get("description", "")
-        if not _is_relevant(title + " " + summary):
-            continue
-
-        try:
-            text = jina.fetch_text(url)
-        except Exception as e:
-            print(f"{source_name}: Jina error for {url}: {e}")
+        text = _article_text(item)
+        if not _is_relevant(title + " " + text):
             continue
 
         extracted = mimo.extract(text, url)

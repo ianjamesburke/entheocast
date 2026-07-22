@@ -49,14 +49,17 @@ def extract(article_text: str, url: str) -> dict | None:
     _throttle()
     try:
         resp = _get_client().chat.completions.create(
-            model="moonshotai/kimi-k2.6:free",
+            model="openai/gpt-oss-20b:free",
             messages=[
                 {"role": "system", "content": SCHEMA_PROMPT},
                 {"role": "user", "content": f"URL: {url}\n\n{truncated}"},
             ],
             response_format={"type": "json_object"},
             temperature=0,
-            max_tokens=512,
+            # gpt-oss-20b is a reasoning model: reasoning tokens count toward this
+            # budget, so it needs headroom above the JSON payload or content comes
+            # back empty/truncated.
+            max_tokens=1500,
         )
         raw = resp.choices[0].message.content or ""
         raw = raw.strip()
