@@ -36,29 +36,58 @@ def _sort_key(entry: dict) -> str:
     return entry.get("first_seen") or ""
 
 
+# Type importance, used only to break ties within the same first_seen date.
+_TYPE_PRIORITY = {
+    "regulatory": 6, "news": 5, "phase_3": 4,
+    "phase_2": 3, "meta_analysis": 3, "phase_1": 2, "observational": 2,
+}
+
+
+def _is_notable(entry: dict) -> bool:
+    """Regulatory/news is always eligible; research must name both a compound and a
+    psychiatric condition. This filters out ketamine/esketamine anesthesia and other
+    off-topic trials that mention a compound but aren't psychedelic-psychiatry research."""
+    if entry.get("type") in ("regulatory", "news"):
+        return True
+    return (
+        entry.get("compound") not in (None, "", "other")
+        and entry.get("condition") not in (None, "", "other")
+    )
+
+
+def _spotlight_rank(entry: dict) -> tuple:
+    # Recency dominates; type importance and a present summary break ties within a date.
+    return (
+        _sort_key(entry),
+        _TYPE_PRIORITY.get(entry.get("type") or "", 1),
+        1 if entry.get("outcome_summary") else 0,
+        entry.get("id", ""),
+    )
+
+
 def select_spotlight(entries: list[dict]) -> dict | None:
-    """Most recent regulatory entry with outcome_summary, falling back to news."""
-    for preferred_type in ("regulatory", "news"):
-        candidates = [
-            e for e in entries
-            if e.get("type") == preferred_type and e.get("outcome_summary")
-        ]
-        if candidates:
-            return sorted(candidates, key=lambda e: (_sort_key(e), e.get("id", "")), reverse=True)[0]
-    return None
+    """Single hero item: the most recent notable entry. Regulatory/news reclaims
+    the hero automatically when fresh ones exist; otherwise the latest late-phase
+    trial or study fills it. Never gated on outcome_summary, so it can't go stale."""
+    notable = [e for e in entries if _is_notable(e)]
+    return max(notable, key=_spotlight_rank) if notable else None
 
 
-def select_featured(entries: list[dict], n: int = 3) -> list[dict]:
-    """Top n entries with outcome_summary, distinct compounds preferred."""
-    with_summary = sorted(
-        [e for e in entries if e.get("outcome_summary")],
+def select_featured(
+    entries: list[dict], n: int = 3, exclude_ids: frozenset[str] = frozenset()
+) -> list[dict]:
+    """Top n most recent notable entries, distinct compounds preferred. Recency-driven
+    (not summary-gated) so it refreshes every week; exclude_ids avoids duplicating the
+    spotlight hero."""
+    pool = sorted(
+        [e for e in entries if _is_notable(e) and e.get("id") not in exclude_ids],
         key=lambda e: (_sort_key(e), e.get("id", "")),
         reverse=True,
     )
     selected: list[dict] = []
     used_compounds: set[str] = set()
 
-    for e in with_summary:
+    for e in pool:
         compound = e.get("compound") or "other"
         if compound not in used_compounds:
             selected.append(e)
@@ -66,7 +95,7 @@ def select_featured(entries: list[dict], n: int = 3) -> list[dict]:
         if len(selected) >= n:
             break
 
-    for e in with_summary:
+    for e in pool:
         if e not in selected:
             selected.append(e)
         if len(selected) >= n:
@@ -89,7 +118,8 @@ def build(entries_path: Path | None = None) -> None:
     week_key = f"{iso_year}-W{iso_week:02d}"
 
     spotlight = select_spotlight(entries)
-    featured = select_featured(entries)
+    exclude = frozenset({spotlight["id"]}) if spotlight and spotlight.get("id") else frozenset()
+    featured = select_featured(entries, exclude_ids=exclude)
     feed = select_feed(entries)
 
     context = {
