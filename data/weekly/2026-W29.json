@@ -2,11 +2,11 @@
   "week": "2026-W29",
   "label": "Week 29 \u2014 July 19\u201325, 2026",
   "week_start": "2026-07-19",
-  "generated": "2026-07-22",
+  "generated": "2026-07-23",
   "stats": {
-    "total_entries": 792,
-    "new_this_week": 136,
-    "compounds_represented": 8
+    "total_entries": 815,
+    "new_this_week": 159,
+    "compounds_represented": 9
   },
   "by_compound": {
     "psilocybin": [
@@ -1113,6 +1113,294 @@
           "revision": 2,
           "judged": "2026-07-22"
         }
+      },
+      {
+        "id": "6e44dbcbabb5cb93c7ff0e8089f96ae760396161f2111a0025360590f90a7c20",
+        "title": "Sustained Effects of Low-to-Moderate Doses of Psilocybin on Brain Connectivity",
+        "compound": "psilocybin",
+        "type": "preprint",
+        "institution": null,
+        "condition": "other",
+        "sample_size": null,
+        "status": "published",
+        "date": "2026-04-24",
+        "abstract": "BackgroundPsilocybin is a classic psychedelic that acutely alters brain functional connectivity. These changes are linked to therapeutic doses and subjective effects, with some evidence that changes persist beyond acute drug administration.\u2026",
+        "outcome_summary": null,
+        "doi": "10.64898/2026.04.17.26351147",
+        "url": "https://doi.org/10.64898/2026.04.17.26351147",
+        "source": "bioRxiv/medRxiv",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Human study on psilocybin's effects on brain connectivity.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "663b4f91c4defa8505a82c016484b05fe2c8ad0f4771aa3b910680d48db7e13d",
+        "title": "Psilocybin-facilitated Treatment for Cocaine Use",
+        "compound": "psilocybin",
+        "type": "news",
+        "institution": "University of Alabama at Birmingham",
+        "condition": "addiction",
+        "sample_size": null,
+        "status": "other",
+        "date": "2025-12-18",
+        "abstract": "above-identified clinical trial, titled \u201cPsilocybin-facilitated Treatment for Cocaine Use.\u201d It appears that results information for the referenced applicable clinical trial has not been submitted to the ClinicalTrials.gov data bank.5 You should review your records of this clinical trial and determine whether you submitted all required results information.\u2026",
+        "outcome_summary": "The FDA has identified potential noncompliance related to the clinical trial titled \"Psilocybin-facilitated Treatment for Cocaine Use\" because results information appears to have not been submitted to the ClinicalTrials.gov data bank. The responsible party is urged to review records and submit any required results information promptly.",
+        "doi": null,
+        "url": "https://www.fda.gov/media/190608/download",
+        "source": "FDA Press Releases",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "FDA action on psilocybin for cocaine use disorder treatment.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "9bc1c13742c96489b4b2fa93962bca1d3f8558eeaddd43ae3cd221138eb43b9d",
+        "title": "Compass Pathways Successfully Achieves Primary Endpoint in Second Phase 3 Trial Evaluating COMP360 Psilocybin for Treatment-Resistant Depression",
+        "compound": "psilocybin",
+        "type": "phase_3",
+        "institution": "Compass Pathways plc",
+        "condition": "depression",
+        "sample_size": null,
+        "status": "active",
+        "date": "2026-02-17",
+        "abstract": "\u201cAcross three robust, well-designed and well-executed clinical trials involving more than 1,000 participants, we have now demonstrated consistent, highly statistically significant results at the primary endpoint and a clinically meaningful effect.\u2026",
+        "outcome_summary": "The second Phase 3 trial (COMP006) evaluating COMP360 psilocybin for treatment-resistant depression met its primary endpoint, showing a statistically significant reduction in symptom severity compared to placebo. Data across multiple trials suggest a rapid onset, durable effect, and a generally well-tolerated safety profile.",
+        "doi": null,
+        "url": "https://ir.compasspathways.com/News--Events-/news/news-details/2026/Compass-Pathways-Successfully-Achieves-Primary-Endpoint-in-Second-Phase-3-Trial-Evaluating-COMP360-Psilocybin-for-Treatment-Resistant-Depression/default.aspx",
+        "source": "Compass Pathways",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Phase 3 trial of psilocybin for treatment-resistant depression.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "5ad0bd1a5dc2994443d6b6eee95fb6d6f2c2b931c59ff50c33f09199450a8df1",
+        "title": "COMP360 psilocybin treatment in TRD",
+        "compound": "psilocybin",
+        "type": "phase_2",
+        "institution": "Compass Pathways",
+        "condition": "depression",
+        "sample_size": 233,
+        "status": "published",
+        "date": "2023-07-24",
+        "abstract": "Our randomised controlled phase 2b study of investigational psilocybin treatment in treatment-resistant depression is the largest psilocybin treatment clinical trial ever conducted, with 233 patients across 22 sites in 10 countries across Europe and North America.\u2026",
+        "outcome_summary": "A single 25mg dose of COMP360 psilocybin, with psychological support, showed a statistically significant reduction in depressive symptoms after three weeks, with a durable response up to 12 weeks.",
+        "doi": "10.1056/NEJMoa2206443",
+        "url": "https://compasspathways.com/our-work/comp360-psilocybin-treatment-in-trd",
+        "source": "Compass Pathways",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Psilocybin for treatment-resistant depression (TRD).",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "7b5d0516365051387dbc75392ae16a83302271971439d4615b0931a28a362d46",
+        "title": "COMPASS Pathways announces publication of positive data from treatment-resistant depression phase 2 clinical trial of COMP360 psilocybin alongside antidepressants in Nature journal, Neuropsychopharmacology",
+        "compound": "psilocybin",
+        "type": "phase_2",
+        "institution": "COMPASS Pathways",
+        "condition": "depression",
+        "sample_size": 19,
+        "status": "published",
+        "date": "2023-07-17",
+        "abstract": "Results: Dr. Guy Goodwin, Chief Medical Officer at COMPASS Pathways, said, \u201cIt has long been thought that SSRIs could interfere with the potential therapeutic effect of psilocybin.\u2026",
+        "outcome_summary": "Positive data from an open-label phase 2 clinical trial of COMP360 psilocybin in addition to daily SSRIs in treatment-resistant depression was published. The trial suggests patients could remain on their SSRI antidepressant medication and experience the same effect from COMP360 psilocybin treatment as people who are not on SSRIs.",
+        "doi": null,
+        "url": "https://ir.compasspathways.com/News--Events-/news/news-details/2023/COMPASS-Pathways-announces-publication-of-positive-data-from-treatment-resistant-depression-phase-2-clinical-trial-of-COMP360-psilocybin-alongside-antidepressants-in-Nature-journal-Neuropsychopharmacology/default.aspx",
+        "source": "Compass Pathways",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Psilocybin for treatment-resistant depression in humans.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "4a6ff312746aa899b2e6d03f6a8afcee462b89f635fdb87f9b37c8ffc6b7d9ee",
+        "title": "Compass Pathways Announces Publication of Results from Phase 2 Study of COMP360 Psilocybin for Post-Traumatic Stress Disorder",
+        "compound": "psilocybin",
+        "type": "phase_2",
+        "institution": "Compass Pathways plc",
+        "condition": "PTSD",
+        "sample_size": 22,
+        "status": "published",
+        "date": "2025-09-02",
+        "abstract": "consistent with the preliminary results to date; the results of early-stage clinical trials of our investigational COMP360 psilocybin treatment in PTSD may not be predictive of the results of our planned late-stage clinical trial in PTSD; our need for substantial additional funding to achieve our business goals and if we are unable to obtain this funding when needed and on acceptable terms, we could be forced to delay, limit or terminate our clinical trials; our efforts to obtain marketing [...] \u201cAffecting approximately 13 million people in the U.S., and with only two approved treatments in the past two decades, post-traumatic stress disorder (PTSD) represents an area of profound unmet need with limited innovation to date,\u201d said Dr.\u2026",
+        "outcome_summary": "A Phase 2 study evaluating COMP360 psilocybin in 22 patients with PTSD showed it was well tolerated and indicated rapid and durable improvement in symptoms from baseline observed out to 12 weeks following a single administration.",
+        "doi": "10.1177/02698811251362390",
+        "url": "https://ir.compasspathways.com/News--Events-/news/news-details/2025/Compass-Pathways-Announces-Publication-of-Results-from-Phase-2-Study-of-COMP360-Psilocybin-for-Post-Traumatic-Stress-Disorder/default.aspx",
+        "source": "Compass Pathways",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Phase 2 study of psilocybin for PTSD in humans.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "1f649008b2359a49196650be047c6f067a1bb299eb530d272a86b94a5f29346e",
+        "title": "Compass Pathways Announces Publication of Results from COMP004 Study on COMP360 Psilocybin for Treatment-Resistant Depression",
+        "compound": "psilocybin",
+        "type": "observational",
+        "institution": "Compass Pathways plc",
+        "condition": "depression",
+        "sample_size": 66,
+        "status": "published",
+        "date": "2025-03-18",
+        "abstract": "These risks, uncertainties, and other factors include, among others: uncertainties associated with risks related to clinical development which is a lengthy and expensive process with uncertain outcomes, and therefore our clinical trials may be delayed or terminated and may be more costly than expected; the results of early-stage clinical trials of our investigational COMP360 psilocybin treatment may not be predictive of the results of later stage clinical trials, including that the results from [...] The pivotal phase 3 clinical program of COMP360 psilocybin treatment in TRD is the largest randomized, controlled, double-blind psilocybin treatment clinical program ever conducted.\u2026",
+        "outcome_summary": "The COMP004 study, a 52-week observational follow-up of previous trials, found that a single 25 mg dose of COMP360 psilocybin demonstrated a longer maintenance of antidepressant effects compared to 1 mg and 10 mg doses in patients with treatment-resistant depression.",
+        "doi": null,
+        "url": "https://ir.compasspathways.com/News--Events-/news/news-details/2025/Compass-Pathways-Announces-Publication-of-Results-from-COMP004-Study-on-COMP360-Psilocybin-for-Treatment-Resistant-Depression/default.aspx",
+        "source": "Compass Pathways",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Psilocybin for treatment-resistant depression study results.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "58542da6aa5c6efb14df56081df3cbb086450ed636f2446d8bf68f5334dcc109",
+        "title": "Compass Pathways Announces Six-Month Data from Second Phase 3 Trial Confirming Rapid and Durable Profile",
+        "compound": "psilocybin",
+        "type": "phase_3",
+        "institution": "Compass Pathways plc",
+        "condition": "depression",
+        "sample_size": 600,
+        "status": "active",
+        "date": "2026-07-07",
+        "abstract": "of more than 3 years on average and a history of over 6 lifetime episodes.\u2026",
+        "outcome_summary": "The second Phase 3 trial (COMP006) for COMP360 (synthetic psilocybin) in treatment-resistant depression (TRD) showed that 39% of participants in the 25 mg arm achieved a clinically meaningful reduction in MADRS score by week 6 and maintained it through week 26. The data confirms a rapid onset and durable profile, with a generally well-tolerated safety profile.",
+        "doi": null,
+        "url": "https://ir.compasspathways.com/News--Events-/news/news-details/2026/Compass-Pathways-Announces-Six-Month-Data-from-Second-Phase-3-Trial-Confirming-Rapid-and-Durable-Profile/default.aspx",
+        "source": "Compass Pathways",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Phase 3 trial of psilocybin for treatment-resistant depression.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "aa84a2dbac97fea789d1492f82485c88821249280d0cd7ff81002086c5433ea6",
+        "title": "Compass Pathways Successfully Achieves Primary Endpoint in First Phase 3 Trial Evaluating COMP360 Psilocybin for Treatment-Resistant Depression",
+        "compound": "psilocybin",
+        "type": "phase_3",
+        "institution": "Compass Pathways plc",
+        "condition": "depression",
+        "sample_size": 258,
+        "status": "active",
+        "date": "2025-06-23",
+        "abstract": "These risks, uncertainties, and other factors include, among others: uncertainties associated with risks related to clinical development which is a lengthy and expensive process with uncertain outcomes, and therefore our clinical trials may be delayed or terminated and may be more costly than expected; the full results and safety data from this Phase 3 study in TRD or the results and safety data from our second Phase 3 study in TRD, COMP006, may not be consistent with the preliminary results to [...] \u201cThe positive top-line results at week 6 from the COMP005 trial underscore the innovative potential of psilocybin treatment in mental health care for which Compass Pathways continues to pave the way,\u201d said Kabir Nath, Chief Executive Officer of Compass Pathways.\u2026",
+        "outcome_summary": "The first Phase 3 trial (COMP005) evaluating COMP360 psilocybin for treatment-resistant depression met its primary endpoint, showing a statistically significant and clinically meaningful reduction in symptom severity compared to placebo at 6 weeks. The trial involved 258 participants.",
+        "doi": null,
+        "url": "https://ir.compasspathways.com/News--Events-/news/news-details/2025/Compass-Pathways-Successfully-Achieves-Primary-Endpoint-in-First-Phase-3-Trial-Evaluating-COMP360-Psilocybin-for-Treatment-Resistant-Depression/default.aspx",
+        "source": "Compass Pathways",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Phase 3 trial of psilocybin for treatment-resistant depression.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "ccb22d89b7744962e1efe6e2fa93d22a960f93548f41772151aa32cc23e468e0",
+        "title": "Compass Pathways Announces Publication of Post-Hoc Analysis Demonstrating Distinction of COMP360 Trial Monitoring & Support from Psychotherapy",
+        "compound": "psilocybin",
+        "type": "phase_2",
+        "institution": "Compass Pathways plc",
+        "condition": "PTSD",
+        "sample_size": null,
+        "status": "published",
+        "date": "2026-07-16",
+        "abstract": "These risks, uncertainties, and other factors include, among others: uncertainties associated with risks related to clinical development which is a lengthy and expensive process with uncertain outcomes, and therefore our clinical trials may be delayed or terminated and may be more costly than expected; the results of early-stage clinical trials of our investigational COMP360 psilocybin treatment in PTSD may not be predictive of the results of our planned late-stage clinical trial in PTSD; our [...] Key Findings & Qualitative Themes These findings were published in the Journal of Psychopharmacology.\u2026",
+        "outcome_summary": "A post-hoc analysis of a Phase 2 study of COMP360 psilocybin treatment in PTSD patients showed minimal interaction between participants and support providers during sessions. Patient-reported monitoring and support were linked to presence and reassurance, distinguishing it from conventional psychotherapy.",
+        "doi": "10.1177/02698811261464988",
+        "url": "https://ir.compasspathways.com/News--Events-/news/news-details/2026/Compass-Pathways-Announces-Publication-of-Post-Hoc-Analysis-Demonstrating-Distinction-of-COMP360-Trial-Monitoring--Support-from-Psychotherapy/default.aspx",
+        "source": "Compass Pathways",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Psilocybin for PTSD treatment in human study.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "fc8bb19af70f2415b01f0ac27f5c90eb3c6a833e91d661bd8bf6ee9842fe9c31",
+        "title": "Magic mushrooms may reshape the brain long after the trip ends",
+        "compound": "psilocybin",
+        "type": "observational",
+        "institution": "University of California - San Francisco",
+        "condition": "other",
+        "sample_size": 28,
+        "status": "published",
+        "date": "2026-07-22",
+        "abstract": ": A single dose of psilocybin produced measurable changes in brain activity and possible changes in brain structure that lasted for up to a month.\u2026",
+        "outcome_summary": "A single dose of psilocybin produced measurable changes in brain activity and possible changes in brain structure that lasted for up to a month. Participants who experienced the greatest increase in flexible, varied brain activity also reported more personal insight and later improvements in well-being.",
+        "doi": null,
+        "url": "https://www.sciencedaily.com/releases/2026/07/260719040005.htm",
+        "source": "General News",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Human study on psilocybin's effects on brain structure and well-being.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "23e5ba261127cad495bd01d5f3c1937dec4774f93b4e33231fbb1bb4fb4397b0",
+        "title": "Magic mushrooms may reshape the brain long after the trip ends",
+        "compound": "psilocybin",
+        "type": "observational",
+        "institution": "University of California - San Francisco",
+        "condition": "other",
+        "sample_size": 28,
+        "status": "published",
+        "date": "2026-07-22",
+        "abstract": ": A single dose of psilocybin produced measurable changes in brain activity and possible changes in brain structure that lasted for up to a month.\u2026",
+        "outcome_summary": "A single dose of psilocybin produced measurable changes in brain activity and possible changes in brain structure that lasted for up to a month. Participants who experienced the greatest increase in flexible, varied brain activity also reported more personal insight and later improvements in well-being.",
+        "doi": "10.1038/s41467-026-28700-z",
+        "url": "http://www.sciencedaily.com/releases/2026/07/260719040005.htm",
+        "source": "General News",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Human study on psilocybin's effects on brain structure and well-being.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
       }
     ],
     "mdma": [
@@ -1402,6 +1690,54 @@
           "model": "google/gemini-2.5-flash-lite",
           "revision": 2,
           "judged": "2026-07-22"
+        }
+      },
+      {
+        "id": "ea20ec2dcd3222b04b488334f9b22f40f40efbc1dcc21da04286f89cab3a7fbb",
+        "title": "BREAKING: FDA Publishes Lykos Therapeutics\u2019 MDMA Complete Response Letter (CRL)",
+        "compound": "mdma",
+        "type": "regulatory",
+        "institution": "Lykos Therapeutics",
+        "condition": "PTSD",
+        "sample_size": null,
+        "status": "approved",
+        "date": "2025-09-04",
+        "abstract": "## BREAKING: FDA Publishes Lykos Therapeutics\u2019 MDMA Complete Response Letter (CRL) * Post published:September 4, 2025 This morning, FDA announced that it will now release complete response letters (CRLs) \u201cpromptly after they are issued to sponsors.\u201d Alongside that announcement, it released 89 previously unpublished CRLs that were issued since 2024.\u2026",
+        "outcome_summary": "The FDA issued a Complete Response Letter (CRL) to Lykos Therapeutics, rejecting their MDMA for PTSD application due to issues with adverse event reporting, lack of durability data, and potential selection bias. The FDA suggested a new clinical trial to address these concerns.",
+        "doi": null,
+        "url": "https://psychedelicalpha.com/news/breaking-fda-publishes-lykos-therapeutics-mdma-complete-response-letter-crl",
+        "source": "Psychedelic Alpha",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "FDA decision on MDMA for PTSD treatment",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "5967daaa41112b03548aa2cbceca3dae383cf6f6fee2ac159f1dd68843ce9204",
+        "title": "Jupiter Neurosciences enters the psychedelic space with $100 million MDMA deal",
+        "compound": "mdma",
+        "type": "news",
+        "institution": "Jupiter Neurosciences",
+        "condition": "other",
+        "sample_size": null,
+        "status": "other",
+        "date": "2026-07-21",
+        "abstract": "# Jupiter enters psychedelics space with $100M deal for PharmAla's MDMA drug. Jupiter Neurosciences will pay $3.3 million upfront to Canada's PharmAla Biotech for the U.S. rights to an MDMA drug to treat neuropsychiatric disorders.\u2026",
+        "outcome_summary": "Jupiter Neurosciences has entered the psychedelic drug development space by acquiring exclusive rights to MDMA-based treatments for PTSD from a private company. The deal is valued at up to $100 million.",
+        "doi": null,
+        "url": "https://www.fiercebiotech.com/biotech/jupiter-neurosciences-enter-psychedelic-space-100-million-mdma-deal",
+        "source": "General News",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Industry news about MDMA for PTSD treatment.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
         }
       }
     ],
@@ -2605,6 +2941,30 @@
           "revision": 2,
           "judged": "2026-07-22"
         }
+      },
+      {
+        "id": "89d7735ca58e6b7e146b553373968b14730dadd09bbc0e630b35ac6aeb6507b0",
+        "title": "Racing Beyond Racemic: A Look at Ketamine Drug Development Ahead of atai\u2019s PCN-101 Phase 2a Readout",
+        "compound": "ketamine",
+        "type": "phase_2",
+        "institution": "Perception Neuroscience (part of the atai platform)",
+        "condition": "depression",
+        "sample_size": null,
+        "status": "active",
+        "date": "2022-11-17",
+        "abstract": "This week, Psychedelic Alpha's Noah Smith takes a look ahead to one of the most eagerly anticipated data readouts of the year,",
+        "outcome_summary": "The article discusses the development of PCN-101 (R-ketamine or arketamine) by Perception Neuroscience for treatment-resistant depression, ahead of its Phase 2a data readout. It also provides background on ketamine and its enantiomers, S-ketamine (Spravato) and R-ketamine.",
+        "doi": null,
+        "url": "https://psychedelicalpha.com/news/racing-beyond-racemic-a-look-at-ketamine-drug-development-ahead-of-atais-pcn-101-phase-2a-readout",
+        "source": "Psychedelic Alpha",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "R-ketamine for treatment-resistant depression",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
       }
     ],
     "lsd": [
@@ -2654,6 +3014,30 @@
           "model": "google/gemini-2.5-flash-lite",
           "revision": 2,
           "judged": "2026-07-22"
+        }
+      },
+      {
+        "id": "5ad24e164337244024554c6ed38a2b44d8198dc2a894e584a18735ce35c2a505",
+        "title": "'Wired For Worry': LSD Pharma Firm Launches Therapist-Targeted Education Campaign",
+        "compound": "lsd",
+        "type": "news",
+        "institution": "Definium Therapeutics",
+        "condition": "anxiety",
+        "sample_size": null,
+        "status": "other",
+        "date": "2026-07-23",
+        "abstract": "Subscribe today to gain access to every *Research Intelligencer* article we publish as well as the exclusive daily newsletter, full access to *The MediaPost Cases*, first-look research and daily insights from Joe Mandese, Editor in Chief. # Become a free MediaPost member now to read this article.\u2026",
+        "outcome_summary": "Definium Therapeutics has launched an unbranded educational campaign called 'Wired for Worry' targeting mental healthcare providers. The campaign aims to educate them about Generalized Anxiety Disorder (GAD) and its potential neurobiological underpinnings, as Definium develops an LSD variation (DT120) for treating GAD and major depression.",
+        "doi": null,
+        "url": "https://www.mediapost.com/publications/article/416709/wired-for-worry-lsd-pharma-firm-launches-therap.html",
+        "source": "General News",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "LSD variation for GAD and depression, targeting therapists.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
         }
       }
     ],
@@ -2849,6 +3233,30 @@
           "revision": 2,
           "judged": "2026-07-22"
         }
+      },
+      {
+        "id": "317c26c8617d061631570e0fba1c5805b3cd08ca43fbafc9e176b1d4dcf0256e",
+        "title": "P\u03b1+ Psychedelic Bulletin #212: Delix Posts Early Efficacy Signal; NRx Wants FDA to Ban Competitors\u2019 Ketamine; Cybin Raises $175M",
+        "compound": "dmt",
+        "type": "phase_2",
+        "institution": "Delix Therapeutics",
+        "condition": "depression",
+        "sample_size": 18,
+        "status": "active",
+        "date": "2025-10-31",
+        "abstract": "Delix Therapeutics Posts Early Efficacy Signal for 'Non-Hallucinogenic' Neuroplastogen as FDA Clears At-Home Phase II \u2022 NRx Pharmaceuticals",
+        "outcome_summary": "A Phase Ib study of DLX-001 (zalsupindole) in major depressive disorder showed a 12-point drop on the MADRS at day 8, sustained through day 36, with no serious adverse events or hallucinatory effects. The company is proceeding to a Phase II trial with FDA clearance for at-home dosing.",
+        "doi": null,
+        "url": "https://psychedelicalpha.com/news/p%CE%B1-psychedelic-bulletin-212-delix-posts-early-efficacy-signal-nrx-wants-fda-to-ban-competitors-ketamine-cybin-raises-175m",
+        "source": "Psychedelic Alpha",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Psychedelic treatment for major depressive disorder.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
       }
     ],
     "ibogaine": [
@@ -2972,6 +3380,32 @@
           "model": "google/gemini-2.5-flash-lite",
           "revision": 2,
           "judged": "2026-07-22"
+        }
+      }
+    ],
+    "mescaline": [
+      {
+        "id": "cb0969aabbcd77663708889967f9bf689736c684d40f11f42db12e5c990c8886",
+        "title": "One of the oldest psychedelics meets modern brain imaging",
+        "compound": "mescaline",
+        "type": "news",
+        "institution": "Northeastern University",
+        "condition": "other",
+        "sample_size": null,
+        "status": "published",
+        "date": "2026-07-20",
+        "abstract": "\u201cThe power of mescaline to me is that it is doing something different than other psychedelics,\u201d said doctoral student Noah Cavallaro, who conducted the study with professor Craig Ferris, who specializes in psychology and pharmaceutical sciences at Northeastern.\u2026",
+        "outcome_summary": "New research suggests mescaline may contribute to hallucinations and changes in sensory perception similar to those reported in some psychiatric conditions. Comparing mescaline to other psychedelics like LSD and psilocybin could help pinpoint the neural pathways causing specific hallucinogenic experiences.",
+        "doi": "10.1007/s12264-026-01632-3",
+        "url": "https://news.northeastern.edu/2026/07/20/mescaline-drug-psychedelic/",
+        "source": "General News",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Mescaline research in humans, potential psychiatric links.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
         }
       }
     ],
@@ -3286,6 +3720,126 @@
           "model": "google/gemini-2.5-flash-lite",
           "revision": 2,
           "judged": "2026-07-22"
+        }
+      },
+      {
+        "id": "fefef78635f9085bb4babd7e1fc2208d4960b573d36ea01ade9b67cd4b5df267",
+        "title": "Midomafetamine Capsules (NDA 215455)",
+        "compound": "other",
+        "type": "regulatory",
+        "institution": "FDA",
+        "condition": "PTSD",
+        "sample_size": null,
+        "status": "approved",
+        "date": "2024-06-04",
+        "abstract": "Farchione, MD Director, Division of Psychiatry Psychopharmacologic Drugs Advisory Committee June 4, 2024 Midomafetamine Capsules (NDA 215455) www.fda.gov 2 Posttraumatic Stress Disorder (PTSD) \u2022 Follows exposure to actual or threatened death, serious injury, or sexual violence \u2022 Intrusive memories, hyperarousal, and avoidant behavior \u2022 Comorbid mood and substance use disorders common \u2022 High risk for suicidal ideation and behavior \u2022 Limited medication options \u2013 Two FDA-approved medications: sertraline and paroxetine \u2013 Response rates rarely exceed 60% \u2013 Less than 20 to 30% of patients achieve full remission \u2022 Unmet need www.fda.gov 3 Psychedelic Drug Development \u2022 Surge in interest, particularly for treatment of psychiatric disorders \u2022 When discussing psychedelics: \u2013 Classic psychedelics (e.g., psilocybin, LSD) \u2013 Midomafetamine \u2022 Schedule I controlled substances \u2022 Prolonged alterations in mood, perception www.fda.gov 4 Midomafetamine for PTSD \u2022 Novel treatment paradigm \u2013 Three sessions of midomafetamine administration \u2013 Psychological intervention \u2022 Preparatory sessions before midomafetamine session \u2022 Medication sessions (with psychological support) \u2022 Integrative sessions after midomafetamine session \u2013 4-month course of treatment \u2022 First of psychedelic drug development program to reach the new drug application stage www.fda.gov 5 Midomafetamine for PTSD \u2022 Investigational new drug application filed in 2001 \u2022 Guidance published in 2023 \u2022 First new drug application for this class www.fda.gov 6 Clinical Trial Data \u2022 Two short-term studies \u2013 Both positive \u2013 Clinically-meaningful improvement \u2022 Long-term follow-up assessment \u2013 Open-label, single-visit \u2013 Appears that effect may be durable \u2022 However, several factors impact interpretability of these results www.fda.gov 7 Functional Unblinding \u2022 Acute effects of midomafetamine make it nearly impossible to blind studies \u2022 Designed and conducted as double-blind studies, but participants able to accurately guess treatment assignment \u2022 Results in expectation bias www.fda.gov 8 Mitigating and Assessing Impact of Bias \u2022 Blinded central raters \u2013 Minimize rater bias \u2022 Unblinding questionnaire \u2013 Assess extent of participant unblinding \u2022 Follow-up assessments \u2013 25% dropout between parent study and follow-up \u2013",
+        "outcome_summary": "Two short-term studies showed clinically meaningful improvement in PTSD symptoms with midomafetamine. A long-term follow-up suggested durable effects, but interpretability is impacted by functional unblinding, dropout rates, and other factors. The contribution of psychotherapy and the safety profile, particularly abuse potential, require further characterization.",
+        "doi": null,
+        "url": "https://www.fda.gov/media/179061/download",
+        "source": "FDA Press Releases",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "PTSD treatment with midomafetamine in human studies.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "855e0be4f08b67dbfcea5f8012c627370cf856bdbed1784b38fb662af9f666dd",
+        "title": "The market for psychedelic drugs to treat mental health conditions gets a big buy signal",
+        "compound": "other",
+        "type": "news",
+        "institution": null,
+        "condition": "other",
+        "sample_size": null,
+        "status": "other",
+        "date": "2026-07-19",
+        "abstract": "# The market for psychedelic drugs to treat mental health conditions gets a big buy signal.\u2026",
+        "outcome_summary": null,
+        "doi": null,
+        "url": "https://www.cnbc.com/2026/07/19/psychedelic-drugs-mental-health.html",
+        "source": "General News",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Industry news about psychedelic drugs for mental health.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "15bf29ed73e3e2c1ff238aa0ff1c3b772374035c1445a868c280cc81333065b9",
+        "title": "Federal Agencies Advance Psychedelic Therapy Following Trump\u2019s Executive Order",
+        "compound": "other",
+        "type": "regulatory",
+        "institution": "Department of Veterans Affairs",
+        "condition": "other",
+        "sample_size": null,
+        "status": "active",
+        "date": "2026-07-22",
+        "abstract": "## Dive deep into the different parts of the cannabis industry with Heady NJ's Finder. # Federal Agencies Advance Psychedelic Therapy Following Trump\u2019s Executive Order. * Breaking NJ Cannabis News, National Cannabis News, Politics and Cannabis Policy.\u2026",
+        "outcome_summary": "President Trump signed an Executive Order to accelerate psychedelic therapy research, allocating $50 million and directing agencies like the FDA, DEA, HHS, and VA to establish pathways for access and collaborate on research. The VA is involved in 20 active clinical trials for conditions like PTSD and depression.",
+        "doi": null,
+        "url": "https://headynj.com/national/federal-agencies-advance-psychedelic-therapy-following-trumps-executive-order/",
+        "source": "General News",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Federal agencies advancing psychedelic therapy research and access.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "67a4bf075afaff238fc7d4535bd6e1283bb037f8a9b639f6d3f8cc75ccd2c750",
+        "title": "Lilly makes up to $3.8B psychedelics play in AtaiBeckley takeover",
+        "compound": "other",
+        "type": "news",
+        "institution": "Eli Lilly",
+        "condition": "depression",
+        "sample_size": null,
+        "status": "other",
+        "date": "2026-07-16",
+        "abstract": "## With the AtaiBeckley acquisition, Eli Lilly is jumping into psychedelics, a drug class that Jefferies analysts say could herald the \u201cbiggest change\u201d for the field of psychiatry. Eli Lilly is acquiring AtaiBeckley in a deal that marks the pharma\u2019s first foray into the emerging psychedelics field.\u2026",
+        "outcome_summary": "Eli Lilly is acquiring AtaiBeckley in a deal that marks the pharma's first foray into the emerging psychedelics field. The deal is valued at up to $3.8 billion, including an upfront payment and a contingent value right.",
+        "doi": null,
+        "url": "https://www.biospace.com/deals/lilly-makes-up-to-3-8b-psychedelics-play-in-ataibeckley-takeover",
+        "source": "General News",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Pharma company's entry into psychedelics field",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
+        }
+      },
+      {
+        "id": "6b85b00b5800797d5513f8fdd59d2df16c1ade129bad0b88c0deed0e0a50be83",
+        "title": "Eli Lilly to buy psychedelics maker AtaiBeckley for $2.8 billion as experimental treatments gain traction",
+        "compound": "other",
+        "type": "news",
+        "institution": "Eli Lilly",
+        "condition": "other",
+        "sample_size": null,
+        "status": "other",
+        "date": "2026-07-16",
+        "abstract": "# Eli Lilly to buy psychedelics maker AtaiBeckley for $2.8 billion as experimental treatments gain traction. * Eli Lilly will acquire psychedelic drugmaker AtaiBeckley for $2.8 billion. * AtaiBeckley is developing several psychedelics for mental health conditions.\u2026",
+        "outcome_summary": null,
+        "doi": null,
+        "url": "https://www.cnbc.com/2026/07/16/eli-lilly-to-buy-psychedelics-maker-ataibeckley-2point8-billion.html",
+        "source": "General News",
+        "first_seen": "2026-07-23",
+        "relevance": {
+          "relevant": true,
+          "reason": "Industry news about a psychedelic company acquisition.",
+          "model": "google/gemini-2.5-flash-lite",
+          "revision": 2,
+          "judged": "2026-07-23"
         }
       }
     ]
