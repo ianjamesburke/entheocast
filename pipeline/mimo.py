@@ -4,10 +4,21 @@ import threading
 import time
 from openai import OpenAI
 
+# Swap the extraction model here. Any OpenRouter model id works; see README
+# "Operations" for how to pick one and what it costs.
+MODEL = "google/gemini-2.5-flash-lite"
+
+# Enough for the JSON payload. Reasoning models spend this budget on hidden
+# reasoning tokens before emitting content and need several times more.
+MAX_TOKENS = 500
+
 _client: OpenAI | None = None
 _rate_lock = threading.Lock()
 _last_call_time = 0.0
-_MIN_INTERVAL = 4.0  # 15 calls/min — safely under free tier 20/min limit
+# A guard against runaway loops, not a tier limit: the account is on paid credits,
+# so the old 4s spacing (built for the free tier's 20 requests/min) only made runs
+# slow. Raise this if a provider starts returning 429s.
+_MIN_INTERVAL = 0.2
 
 SCHEMA_PROMPT = """Extract structured data from this article. Return JSON with exactly these fields:
 - title: string (article title)
@@ -49,17 +60,14 @@ def extract(article_text: str, url: str) -> dict | None:
     _throttle()
     try:
         resp = _get_client().chat.completions.create(
-            model="openai/gpt-oss-20b:free",
+            model=MODEL,
             messages=[
                 {"role": "system", "content": SCHEMA_PROMPT},
                 {"role": "user", "content": f"URL: {url}\n\n{truncated}"},
             ],
             response_format={"type": "json_object"},
             temperature=0,
-            # gpt-oss-20b is a reasoning model: reasoning tokens count toward this
-            # budget, so it needs headroom above the JSON payload or content comes
-            # back empty/truncated.
-            max_tokens=1500,
+            max_tokens=MAX_TOKENS,
         )
         raw = resp.choices[0].message.content or ""
         raw = raw.strip()
