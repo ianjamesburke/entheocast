@@ -131,6 +131,37 @@ No LLM needed. Direct JSON parsing, filter by compound keywords.
 
 ---
 
+## Phase 9 — Post-Launch Maintenance
+
+### Tier 2/3 revival (2026-07-22)
+Tier 2/3 produced nothing for six weeks; three independent breakages stacked.
+
+- [x] `weekly.yml` ran `run.py` with no `--tier` flag, silently defaulting to Tier 2 and never running Tier 3
+- [x] Jina Reader began requiring an API key that was never provisioned — removed the dependency entirely in favour of Tavily `include_raw_content` and the RSS `content:encoded` field; deleted `pipeline/jina.py`
+- [x] Mimo's model `moonshotai/kimi-k2.6:free` was discontinued — moved to `openai/gpt-oss-20b:free`, raising `max_tokens` 512 → 1500 (reasoning tokens share the budget and were starving the JSON payload)
+- [x] Verified in production: run 29966525569 succeeded, 22 fresh summarized entries
+
+### Homepage relevance and freshness (2026-07-22)
+"Featured This Week" showed a 2004 trial and no summaries.
+
+- [x] `pipeline/dates.py` — normalize every source date shape to ISO at ingest (RFC-2822, PubMed `2026 Jun 6` and seasonal `2026 Summer`, bare years)
+- [x] Fix RSS dates sliced to 10 chars (`"Fri, 17 Ap"`); recover the 22 already stored
+- [x] Tier 3 had no publication date at all — switch Tavily to `topic="news"` for `published_date` (which also activates its `days` window)
+- [x] Rank featured/spotlight/feed on publication date, 180-day window, excluding future-dated planned trial starts
+- [x] `pipeline/snippet.py` — capture abstracts at ingest (PubMed efetch, CT.gov BriefSummary, Semantic Scholar + bioRxiv already fetched and discarded theirs); cards fall back to abstract when no LLM summary exists
+- [x] `pipeline/relevance.py` — gate Tier 1 at ingest; the queries match any field and LSD/DMT collide with lumpy skin disease, laparoscopic splenectomy, and disease-modifying therapy. Removed 1,653 off-topic records (42% of the corpus)
+- [x] `pipeline/classify.py` — one compound detector replacing four copies, aware of spelled-out names, metabolites, and development codes; "other" fell 42% → 6%
+- [x] Dedup keyed off `pipeline/seen_urls.json`, which the workflow never committed, so every run re-appended the back catalogue (4,257 rows = 1,110 studies). Derive the seen set from the committed corpus; delete the side-car file
+- [x] Wire `weekly.generate()` into `run.py` and auto-generate `weekly/index.html` — weekly/ had been frozen at the single June issue
+- [x] Unify the week key: `build.py` derived it from today, the generator from the issue's Sunday, so the homepage linked to a nonexistent issue on every day but Sunday
+- [x] Home link in nav; spotlight restyled to the site palette
+
+### Open
+- [ ] Ketamine is 41% of the corpus, much of it anesthesia, veterinary, and sedation research that is not psychedelic psychiatry. Decide whether a psychedelic-research tracker should scope ketamine to psychiatric indications. Homepage is unaffected (`_is_notable` already requires a named condition), but it skews the corpus and compound breakdown
+- [ ] `openai/gpt-oss-20b:free` may hit a daily free-tier cap under full weekly load; paid fallback is `moonshotai/kimi-k2.6`
+
+---
+
 ## Future (Post-Launch)
 
 Not in scope for v1. Do not build until launch criteria are met.
