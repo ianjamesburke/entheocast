@@ -28,11 +28,12 @@
     .issue-cta:hover { text-decoration: underline; }
 
     /* Spotlight */
-    .spotlight { background: #fffdf5; border: 1px solid #e8c97a; border-left: 3px solid #c07c10; border-radius: 5px; padding: 1.15rem 1.4rem; margin-bottom: 2rem; }
-    .spotlight-flag { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #a06010; margin-bottom: 0.4rem; }
-    .spotlight h3 { font-family: 'Syne',sans-serif; font-size: 0.97rem; font-weight: 700; color: #1c1408; line-height: 1.35; margin-bottom: 0.5rem; }
-    .spotlight p { font-size: 0.81rem; color: #5a4020; line-height: 1.6; margin-bottom: 0.7rem; }
-    .spotlight-link { font-size: 0.76rem; font-weight: 600; color: #a06010; text-decoration: none; }
+    .spotlight { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 5px; padding: 1.15rem 1.4rem; margin-bottom: 2rem; }
+    .spotlight-flag { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+    .spotlight h3 { font-family: 'Syne',sans-serif; font-size: 0.97rem; font-weight: 700; color: var(--text); line-height: 1.35; margin-bottom: 0.5rem; }
+    .spotlight p { font-size: 0.81rem; color: var(--dim); line-height: 1.6; margin-bottom: 0.7rem; }
+    .spotlight-date { font-size: 0.7rem; color: var(--muted); margin-bottom: 0.6rem; }
+    .spotlight-link { font-size: 0.76rem; font-weight: 600; color: var(--accent); text-decoration: none; }
     .spotlight-link:hover { text-decoration: underline; }
 
     /* Entry cards */
@@ -75,6 +76,7 @@
   <div class="header-inner">
     <a href="index.html" class="wordmark">ENTHEO<span class="dot">·</span>CAST</a>
     <nav>
+      <a href="index.html" class="active">Home</a>
       <a href="trials.html">Trials</a>
       <a href="weekly/index.html">Weekly</a>
       <a href="podcast.html">Podcast</a>
@@ -89,18 +91,22 @@
     <div>
 
       <div class="issue-block">
-        <div class="issue-kicker">Week 30 · July 2026</div>
+        <div class="issue-kicker">Week 29 · July 2026</div>
         <div class="issue-date">July 2026</div>
-        <p class="issue-desc">A curated, open repository of psychedelic clinical trials, research, and regulatory updates. <strong id="stat-entries">3769</strong> entries — updated weekly.</p>
-        <a href="weekly/2026-W30.html" class="issue-cta">Read this week's full issue →</a>
+        <p class="issue-desc">A curated, open repository of psychedelic clinical trials, research, and regulatory updates. <strong id="stat-entries">1192</strong> entries — updated weekly.</p>
+        <a href="weekly/2026-W29.html" class="issue-cta">Read this week's full issue →</a>
       </div>
 
       
       <div class="spotlight">
-        <div class="spotlight-flag">Phase 3 · Psilocybin</div>
-        <h3>Psilocybin Intervention for Veterans Overcoming Treatment-Resistant Depression</h3>
+        <div class="spotlight-flag">Regulatory · MDMA</div>
+        <h3>MDMA PTSD FDA Decision 2026</h3>
         
-        <a href="https://clinicaltrials.gov/study/NCT07226232" target="_blank" rel="noopener" class="spotlight-link">Read on ClinicalTrials.gov →</a>
+        
+        <p>The FDA approved MDMA‑assisted therapy for PTSD in 2026.</p>
+        
+        <div class="spotlight-date">Jul 22, 2026</div>
+        <a href="https://www.1800medicalsupply.com/blog/mdma-ptsd-fda-decision-2026" target="_blank" rel="noopener" class="spotlight-link">Read on General News →</a>
       </div>
       
 
@@ -110,52 +116,141 @@
       <div class="entry-card">
         <div class="entry-top">
           <div>
-            <div class="entry-h"><a href="https://clinicaltrials.gov/study/NCT05455996" target="_blank" rel="noopener">MDMA-Assisted Therapy for Stress Disorders in Healthcare Workers and First Responders</a></div>
-            <div class="entry-source">ClinicalTrials.gov · 2026-10</div>
-          </div>
-          <div class="entry-badges">
-            <span class="chip mdma">MDMA</span>
-            <span class="type-chip">Phase 2</span>
-          </div>
-        </div>
-        
-        <div class="entry-footer"><a href="https://clinicaltrials.gov/study/NCT05455996" target="_blank" rel="noopener" class="source-link">Read on ClinicalTrials.gov →</a></div>
-      </div>
-      
-      <div class="entry-card">
-        <div class="entry-top">
-          <div>
-            <div class="entry-h"><a href="https://clinicaltrials.gov/study/NCT07317206" target="_blank" rel="noopener">Ayahuasca, Esketamine and PTSD</a></div>
-            <div class="entry-source">ClinicalTrials.gov · 2025-12-20</div>
-          </div>
-          <div class="entry-badges">
-            <span class="chip ketamine">Ketamine</span>
-            <span class="type-chip">Phase 2</span>
-          </div>
-        </div>
-        
-        <div class="entry-footer"><a href="https://clinicaltrials.gov/study/NCT07317206" target="_blank" rel="noopener" class="source-link">Read on ClinicalTrials.gov →</a></div>
-      </div>
-      
-      <div class="entry-card">
-        <div class="entry-top">
-          <div>
-            <div class="entry-h"><a href="https://clinicaltrials.gov/study/NCT06444243" target="_blank" rel="noopener">Psilocybin-assisted Therapy for Alcohol Use Disorder</a></div>
-            <div class="entry-source">ClinicalTrials.gov · 2024-09</div>
+            <div class="entry-h"><a href="https://www.hopkinsmedicine.org/psychiatry/research/psychedelics-research" target="_blank" rel="noopener">Psychedelics Research and Psilocybin Therapy</a></div>
+            <div class="entry-source">General News · Jul 22, 2026</div>
           </div>
           <div class="entry-badges">
             <span class="chip psilocybin">Psilocybin</span>
-            <span class="type-chip">Phase 2</span>
+            <span class="type-chip">News</span>
           </div>
         </div>
         
-        <div class="entry-footer"><a href="https://clinicaltrials.gov/study/NCT06444243" target="_blank" rel="noopener" class="source-link">Read on ClinicalTrials.gov →</a></div>
+        
+        <div class="entry-summary">Johns Hopkins has led psilocybin research, demonstrating safety and therapeutic potential in anxiety and smoking cessation, and has obtained regulatory approval to resume research with healthy volunteers.</div>
+        
+        <div class="entry-footer"><a href="https://www.hopkinsmedicine.org/psychiatry/research/psychedelics-research" target="_blank" rel="noopener" class="source-link">Read on General News →</a></div>
+      </div>
+      
+      <div class="entry-card">
+        <div class="entry-top">
+          <div>
+            <div class="entry-h"><a href="https://valoannetwork.com/mdma-trials-ptsd-soldiers" target="_blank" rel="noopener">MDMA Trials for PTSD in Soldiers: What to Know Now</a></div>
+            <div class="entry-source">General News · Jul 22, 2026</div>
+          </div>
+          <div class="entry-badges">
+            <span class="chip mdma">MDMA</span>
+            <span class="type-chip">Phase 3</span>
+          </div>
+        </div>
+        
+        
+        <div class="entry-summary">Phase 3 trial data reviewed by the FDA show significant reductions in symptom severity for treatment‑resistant PTSD; trials are ongoing and FDA approval is pending.</div>
+        
+        <div class="entry-footer"><a href="https://valoannetwork.com/mdma-trials-ptsd-soldiers" target="_blank" rel="noopener" class="source-link">Read on General News →</a></div>
+      </div>
+      
+      <div class="entry-card">
+        <div class="entry-top">
+          <div>
+            <div class="entry-h"><a href="https://clinicaltrials.gov/study/NCT03829579" target="_blank" rel="noopener">Pre-Approval Access to Esketamine Nasal Spray for the Treatment of Treatment-Resistant Depression (TRD)</a></div>
+            <div class="entry-source">ClinicalTrials.gov · Jul 22, 2026</div>
+          </div>
+          <div class="entry-badges">
+            <span class="chip ketamine">Ketamine</span>
+            <span class="type-chip">Observational</span>
+          </div>
+        </div>
+        
+        
+        <div class="entry-summary">This is a pre-approval access program (PAAP) for eligible participants.…</div>
+        
+        <div class="entry-footer"><a href="https://clinicaltrials.gov/study/NCT03829579" target="_blank" rel="noopener" class="source-link">Read on ClinicalTrials.gov →</a></div>
       </div>
       
 
       <div class="section-label" style="margin-top:2rem">More from the Feed</div>
       <div id="entry-list">
-        <div class="entry-simple"><div class="entry-simple-body"><div class="entry-simple-meta">Loading...</div></div></div>
+        
+        <div class="entry-simple">
+          <div class="entry-simple-body">
+            <div class="entry-simple-title"><a href="https://www.1800medicalsupply.com/blog/mdma-ptsd-fda-decision-2026" target="_blank" rel="noopener">MDMA PTSD FDA Decision 2026</a></div>
+            <div class="entry-simple-meta">Regulatory · Jul 22, 2026 · FDA</div>
+          </div>
+          <span class="chip mdma">MDMA</span>
+        </div>
+        
+        <div class="entry-simple">
+          <div class="entry-simple-body">
+            <div class="entry-simple-title"><a href="https://www.hopkinsmedicine.org/psychiatry/research/psychedelics-research" target="_blank" rel="noopener">Psychedelics Research and Psilocybin Therapy</a></div>
+            <div class="entry-simple-meta">News · Jul 22, 2026 · Johns Hopkins Center for Psychedelic and Con</div>
+          </div>
+          <span class="chip psilocybin">Psilocybin</span>
+        </div>
+        
+        <div class="entry-simple">
+          <div class="entry-simple-body">
+            <div class="entry-simple-title"><a href="https://www.fda.gov/news-events/press-announcements/fda-accelerates-action-treatments-serious-mental-illness-following-executive-order" target="_blank" rel="noopener">FDA Accelerates Action on Treatments for Serious Mental Illness Following Executive Order</a></div>
+            <div class="entry-simple-meta">News · Jul 22, 2026 · DemeRx NB</div>
+          </div>
+          <span class="chip ibogaine">Ibogaine</span>
+        </div>
+        
+        <div class="entry-simple">
+          <div class="entry-simple-body">
+            <div class="entry-simple-title"><a href="https://www.cnbc.com/2026/07/19/psychedelic-drugs-mental-health.html" target="_blank" rel="noopener">The market for psychedelic drugs to treat mental health conditions gets a big buy signal</a></div>
+            <div class="entry-simple-meta">Phase 3 · Jul 22, 2026 · Compass Pathways</div>
+          </div>
+          <span class="chip psilocybin">Psilocybin</span>
+        </div>
+        
+        <div class="entry-simple">
+          <div class="entry-simple-body">
+            <div class="entry-simple-title"><a href="https://compasspathways.com/our-work/post-traumatic-stress-disorder-ptsd" target="_blank" rel="noopener">Post-traumatic stress disorder (PTSD)</a></div>
+            <div class="entry-simple-meta">News · Jul 22, 2026 · Compass Pathways</div>
+          </div>
+          <span class="chip psilocybin">Psilocybin</span>
+        </div>
+        
+        <div class="entry-simple">
+          <div class="entry-simple-body">
+            <div class="entry-simple-title"><a href="https://valoannetwork.com/mdma-trials-ptsd-soldiers" target="_blank" rel="noopener">MDMA Trials for PTSD in Soldiers: What to Know Now</a></div>
+            <div class="entry-simple-meta">Phase 3 · Jul 22, 2026 · Veterans Affairs (VA)</div>
+          </div>
+          <span class="chip mdma">MDMA</span>
+        </div>
+        
+        <div class="entry-simple">
+          <div class="entry-simple-body">
+            <div class="entry-simple-title"><a href="https://clinicaltrials.gov/study/NCT03829579" target="_blank" rel="noopener">Pre-Approval Access to Esketamine Nasal Spray for the Treatment of Treatment-Resistant Depression (TRD)</a></div>
+            <div class="entry-simple-meta">Observational · Jul 22, 2026 · Janssen Research &amp; Development, LLC</div>
+          </div>
+          <span class="chip ketamine">Ketamine</span>
+        </div>
+        
+        <div class="entry-simple">
+          <div class="entry-simple-body">
+            <div class="entry-simple-title"><a href="https://psychedelicalpha.com/news/australian-federal-government-funds-trial-of-mdma-assisted-therapy-for-individuals-affected-by-northern-river-floods" target="_blank" rel="noopener">Australian Federal Government Funds Trial of MDMA-Assisted Therapy for Individuals Affected by Northern River Floods</a></div>
+            <div class="entry-simple-meta">News · Jul 22, 2026 · Southern Cross University</div>
+          </div>
+          <span class="chip mdma">MDMA</span>
+        </div>
+        
+        <div class="entry-simple">
+          <div class="entry-simple-body">
+            <div class="entry-simple-title"><a href="https://www.withpower.com/trial/phase-1-depressive-disorder-2024-e27e3" target="_blank" rel="noopener">Phase 1 Depressive Disorder 2024</a></div>
+            <div class="entry-simple-meta">Phase 1 · Jul 22, 2026</div>
+          </div>
+          <span class="chip ketamine">Ketamine</span>
+        </div>
+        
+        <div class="entry-simple">
+          <div class="entry-simple-body">
+            <div class="entry-simple-title"><a href="https://chacruna.net/chacruna-institute-launches-2026-course-on-roots-of-psychedelic-therapy-shamanism-ritual-and-traditional-uses-of-sacred-plants/" target="_blank" rel="noopener">Chacruna Institute launches 2026 course on roots of psychedelic therapy, shamanism, ritual and traditional uses of sacred plants</a></div>
+            <div class="entry-simple-meta">News · Jul 22, 2026 · Chacruna Institute for Psychedelic Plant Med</div>
+          </div>
+          <span class="chip other">Other</span>
+        </div>
+        
       </div>
       <p class="view-all"><a href="trials.html">View all entries →</a></p>
 
@@ -182,25 +277,18 @@
 </div>
 
 <script>
+// The feed and entry count are rendered at build time. This only draws the compound
+// bars, which need the full corpus rather than the ten entries already on the page.
 const COMPOUND_LABELS = { psilocybin:"Psilocybin", mdma:"MDMA", ketamine:"Ketamine", lsd:"LSD", dmt:"DMT", ibogaine:"Ibogaine", ayahuasca:"Ayahuasca", mescaline:"Mescaline", other:"Other" };
 const COMPOUND_ORDER = ["psilocybin","mdma","ketamine","lsd","dmt","ibogaine","ayahuasca","mescaline","other"];
-const TYPE_LABELS = { phase_1:"Phase 1", phase_2:"Phase 2", phase_3:"Phase 3", observational:"Observational", meta_analysis:"Meta-analysis", regulatory:"Regulatory", news:"News", preprint:"Preprint" };
 
 fetch("data/entries.json").then(r=>r.json()).then(entries=>{
-  document.getElementById("stat-entries").textContent = entries.length;
   const counts={};
   entries.forEach(e=>{ const c=e.compound||"other"; counts[c]=(counts[c]||0)+1; });
   const max=Math.max(...Object.values(counts));
   document.getElementById("compound-bars").innerHTML=COMPOUND_ORDER.filter(c=>counts[c]).map(c=>`<div class="cbar"><span class="cbar-name">${COMPOUND_LABELS[c]||c}</span><div class="cbar-track"><div class="cbar-fill" style="width:${Math.round(counts[c]/max*100)}%"></div></div><span class="cbar-count">${counts[c]}</span></div>`).join("");
-  const chip=c=>["psilocybin","mdma","ketamine","lsd","dmt","ibogaine","ayahuasca","mescaline"].includes(c)?c:"other";
-  document.getElementById("entry-list").innerHTML=entries.slice(-10).reverse().map(e=>{
-    const c=e.compound||"other";
-    const type=TYPE_LABELS[e.type]||e.type||"";
-    const meta=[type,e.institution?e.institution.slice(0,44):null].filter(Boolean).join(" · ");
-    return `<div class="entry-simple"><div class="entry-simple-body"><div class="entry-simple-title"><a href="${e.url}" target="_blank" rel="noopener">${e.title.slice(0,92)}${e.title.length>92?"…":""}</a></div>${meta?`<div class="entry-simple-meta">${meta}</div>`:""}</div><span class="chip ${chip(c)}">${COMPOUND_LABELS[c]||c}</span></div>`;
-  }).join("");
 }).catch(()=>{
-  document.getElementById("entry-list").innerHTML='<div class="entry-simple"><div class="entry-simple-body"><div class="entry-simple-meta" style="color:var(--muted)">Open via HTTP server to load entries.</div></div></div>';
+  document.getElementById("compound-bars").innerHTML='<div style="font-size:0.78rem;color:var(--muted)">Open via HTTP server to load breakdown.</div>';
 });
 </script>
 </body>

@@ -2,10 +2,14 @@ import json
 import subprocess
 import urllib.parse
 from datetime import date
+
+import dates
+import relevance
+from classify import COMPOUND_ORDER, detect_compound, detect_condition
 from dedup import make_id
+from snippet import condense
 
 BASE = "https://clinicaltrials.gov/api/v2/studies"
-COMPOUND_KEYWORDS = ["psilocybin", "mdma", "lsd", "ketamine", "dmt", "ibogaine", "ayahuasca", "mescaline"]
 
 PHASE_MAP = {
     "PHASE1": "phase_1",
@@ -25,37 +29,6 @@ STATUS_MAP = {
     "ENROLLING_BY_INVITATION": "recruiting",
 }
 
-CONDITION_MAP = {
-    "depression": "depression",
-    "ptsd": "PTSD",
-    "post-traumatic": "PTSD",
-    "anxiety": "anxiety",
-    "addiction": "addiction",
-    "substance use": "addiction",
-    "ocd": "OCD",
-    "obsessive": "OCD",
-    "eating disorder": "eating_disorder",
-    "anorexia": "eating_disorder",
-    "bulimia": "eating_disorder",
-    "cluster headache": "cluster_headache",
-}
-
-
-def _detect_compound(text: str) -> str:
-    t = text.lower()
-    for c in COMPOUND_KEYWORDS:
-        if c in t:
-            return c
-    return "other"
-
-
-def _detect_condition(text: str) -> str:
-    t = text.lower()
-    for k, v in CONDITION_MAP.items():
-        if k in t:
-            return v
-    return "other"
-
 
 def _curl_get(url: str, params: dict) -> dict:
     qs = urllib.parse.urlencode(params)
@@ -73,11 +46,14 @@ def _curl_get(url: str, params: dict) -> dict:
 
 def fetch(min_date: str | None = None) -> list[dict]:
     all_entries = []
-    for compound in COMPOUND_KEYWORDS:
+    for compound in COMPOUND_ORDER:
         params = {
             "query.intr": compound,
             "pageSize": 50,
-            "fields": "NCTId,BriefTitle,OverallStatus,Phase,LeadSponsorName,EnrollmentCount,StartDate,PrimaryCompletionDate,Condition,InterventionName",
+            "fields": (
+                "NCTId,BriefTitle,BriefSummary,OverallStatus,Phase,LeadSponsorName,"
+                "EnrollmentCount,StartDate,PrimaryCompletionDate,Condition,InterventionName"
+            ),
         }
         try:
             data = _curl_get(BASE, params)
@@ -95,20 +71,31 @@ def fetch(min_date: str | None = None) -> list[dict]:
 
             nct_id = id_mod.get("nctId", "")
             title = id_mod.get("briefTitle", "")
+            brief_summary = proto.get("descriptionModule", {}).get("briefSummary", "")
+            interventions = " ".join(
+                i.get("name", "")
+                for i in proto.get("armsInterventionsModule", {}).get("interventions", [])
+            )
+
+            # query.intr matches the intervention text, which collides with unrelated
+            # procedures sharing a compound acronym (LSD, DMT most often).
+            if not relevance.is_relevant(f"{title} {interventions}", brief_summary):
+                continue
+
             status_raw = status_mod.get("overallStatus", "")
             phases = design_mod.get("phases", [])
             phase_raw = phases[0] if phases else "NA"
             institution = sponsor_mod.get("leadSponsor", {}).get("name")
             sample_size = enroll_mod.get("count")
-            start_date = status_mod.get("startDateStruct", {}).get("date", "")[:10] or str(date.today())
-            if min_date and start_date < min_date:
+            start_date = dates.to_iso(status_mod.get("startDateStruct", {}).get("date"))
+            if min_date and start_date and start_date < min_date:
                 continue
 
             url = f"https://clinicaltrials.gov/study/{nct_id}"
-            compound_detected = _detect_compound(title)
+            compound_detected = detect_compound(f"{title} {interventions}")
             conditions_list = proto.get("conditionsModule", {}).get("conditions", [])
             condition_text = " ".join(conditions_list)
-            condition = _detect_condition(condition_text + " " + title)
+            condition = detect_condition(condition_text + " " + title)
 
             all_entries.append({
                 "id": make_id(title, None, url),
@@ -120,6 +107,7 @@ def fetch(min_date: str | None = None) -> list[dict]:
                 "sample_size": sample_size,
                 "status": STATUS_MAP.get(status_raw, "active"),
                 "date": start_date,
+                "abstract": condense(brief_summary),
                 "outcome_summary": None,
                 "doi": None,
                 "url": url,

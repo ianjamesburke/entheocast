@@ -1,6 +1,8 @@
 from datetime import date
 import feedparser
+import dates
 from dedup import make_id
+from snippet import condense
 import mimo
 
 COMPOUND_KEYWORDS = ["psilocybin", "mdma", "lsd", "ketamine", "dmt", "ibogaine", "ayahuasca", "mescaline"]
@@ -25,9 +27,11 @@ def fetch_rss(feed_url: str, source_name: str, min_date: str | None = None) -> l
     for item in feed.entries:
         title = item.get("title", "")
         url = item.get("link", "")
-        pub_date = item.get("published", "")[:10] if item.get("published") else str(date.today())
+        # Feeds emit RFC-2822 ("Fri, 17 Apr 2026 10:00:00 +0000"); slicing to 10
+        # characters silently produced "Fri, 17 Ap" instead of a date.
+        pub_date = dates.to_iso(item.get("published"))
 
-        if min_date and pub_date < min_date:
+        if min_date and pub_date and pub_date < min_date:
             continue
 
         text = _article_text(item)
@@ -49,6 +53,7 @@ def fetch_rss(feed_url: str, source_name: str, min_date: str | None = None) -> l
             "sample_size": extracted.get("sample_size"),
             "status": extracted.get("status", "published"),
             "date": pub_date,
+            "abstract": condense(text),
             "outcome_summary": extracted.get("outcome_summary"),
             "doi": extracted.get("doi"),
             "url": url,

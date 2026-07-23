@@ -1,36 +1,14 @@
 import httpx
 from datetime import date
+
+import relevance
+from classify import detect_compound, detect_condition
 from dedup import make_id
+from snippet import condense
 
 BASE = "https://api.semanticscholar.org/graph/v1/paper/search"
-COMPOUND_KEYWORDS = ["psilocybin", "mdma", "lsd", "ketamine", "dmt", "ibogaine", "ayahuasca", "mescaline"]
 QUERY = "psilocybin | MDMA | LSD | ketamine | DMT | ibogaine | ayahuasca | mescaline"
 FIELDS = "title,year,externalIds,publicationTypes,abstract"
-
-
-def _detect_compound(text: str) -> str:
-    t = text.lower()
-    for c in COMPOUND_KEYWORDS:
-        if c in t:
-            return c
-    return "other"
-
-
-def _detect_condition(text: str) -> str:
-    t = text.lower()
-    cond_map = {
-        "depression": "depression",
-        "ptsd": "PTSD",
-        "anxiety": "anxiety",
-        "addiction": "addiction",
-        "ocd": "OCD",
-        "eating disorder": "eating_disorder",
-        "cluster headache": "cluster_headache",
-    }
-    for k, v in cond_map.items():
-        if k in t:
-            return v
-    return "other"
 
 
 def _classify_type(pub_types: list[str]) -> str:
@@ -60,14 +38,19 @@ def fetch(min_year: int | None = None) -> list[dict]:
     seen_ids: set[str] = set()
     for paper in data.get("data", []):
         title = paper.get("title", "")
+        abstract = paper.get("abstract") or ""
+
+        # The OR query matches on any field; most hits merely cite a compound name.
+        if not relevance.is_relevant(title, abstract):
+            continue
+
         year = paper.get("year")
-        pub_date = f"{year}-01-01" if year else str(date.today())
+        pub_date = f"{year}-01-01" if year else None
         external_ids = paper.get("externalIds") or {}
         doi = external_ids.get("DOI")
         url = f"https://www.semanticscholar.org/paper/{paper['paperId']}" if paper.get("paperId") else ""
-        abstract = paper.get("abstract") or ""
-        compound = _detect_compound(title + " " + abstract)
-        condition = _detect_condition(title + " " + abstract)
+        compound = detect_compound(title + " " + abstract)
+        condition = detect_condition(title + " " + abstract)
         pub_types = paper.get("publicationTypes") or []
         entry_id = make_id(title, doi, url)
 
@@ -83,6 +66,7 @@ def fetch(min_year: int | None = None) -> list[dict]:
                 "sample_size": None,
                 "status": "published",
                 "date": pub_date,
+                "abstract": condense(abstract),
                 "outcome_summary": None,
                 "doi": doi,
                 "url": url,

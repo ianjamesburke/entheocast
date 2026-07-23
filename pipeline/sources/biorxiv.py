@@ -1,35 +1,14 @@
 import httpx
 from datetime import date, timedelta
+
+import dates
+import relevance
+from classify import detect_compound, detect_condition
 from dedup import make_id
+from snippet import condense
 
 BASE = "https://api.biorxiv.org/details"
-COMPOUND_KEYWORDS = ["psilocybin", "mdma", "lsd", "ketamine", "dmt", "ibogaine", "ayahuasca", "mescaline"]
 SERVERS = ["biorxiv", "medrxiv"]
-
-
-def _detect_compound(text: str) -> str:
-    t = text.lower()
-    for c in COMPOUND_KEYWORDS:
-        if c in t:
-            return c
-    return "other"
-
-
-def _detect_condition(text: str) -> str:
-    t = text.lower()
-    cond_map = {
-        "depression": "depression",
-        "ptsd": "PTSD",
-        "anxiety": "anxiety",
-        "addiction": "addiction",
-        "ocd": "OCD",
-        "eating disorder": "eating_disorder",
-        "cluster headache": "cluster_headache",
-    }
-    for k, v in cond_map.items():
-        if k in t:
-            return v
-    return "other"
 
 
 def fetch(start_date: str | None = None) -> list[dict]:
@@ -52,24 +31,24 @@ def fetch(start_date: str | None = None) -> list[dict]:
         for paper in data.get("collection", []):
             title = paper.get("title", "")
             abstract = paper.get("abstract", "")
-            text = (title + " " + abstract).lower()
-            if not any(kw in text for kw in COMPOUND_KEYWORDS):
+            if not relevance.is_relevant(title, abstract):
                 continue
 
             doi = paper.get("doi")
             paper_url = f"https://doi.org/{doi}" if doi else ""
-            pub_date = paper.get("date", str(date.today()))
+            pub_date = dates.to_iso(paper.get("date"))
 
             all_entries.append({
                 "id": make_id(title, doi, paper_url),
                 "title": title,
-                "compound": _detect_compound(title + " " + abstract),
+                "compound": detect_compound(title + " " + abstract),
                 "type": "preprint",
                 "institution": paper.get("institution"),
-                "condition": _detect_condition(title + " " + abstract),
+                "condition": detect_condition(title + " " + abstract),
                 "sample_size": None,
                 "status": "published",
                 "date": pub_date,
+                "abstract": condense(abstract),
                 "outcome_summary": None,
                 "doi": doi,
                 "url": paper_url,

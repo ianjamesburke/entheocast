@@ -1,5 +1,7 @@
 from datetime import date, datetime
+import dates
 from dedup import make_id
+from snippet import condense
 import mimo
 import tavily_client as tavily
 
@@ -28,6 +30,13 @@ def _is_relevant(text: str) -> bool:
 
 _BOT_CHALLENGE_PHRASES = ("just a moment", "enable javascript", "checking your browser", "ddos protection")
 
+# Titles of navigation and listing pages that carry no article of their own.
+_NON_ARTICLE_TITLES = (
+    "just a moment", "our work", "home", "about", "contact", "privacy policy",
+    "terms of service", "page not found", "access denied", "studies currently recruiting",
+    "search results", "newsroom", "press releases", "publications",
+)
+
 
 def _is_real_article(text: str) -> bool:
     """Return False if text looks like a bot-challenge or error page."""
@@ -35,6 +44,14 @@ def _is_real_article(text: str) -> bool:
         return False
     t = text.lower()
     return not any(p in t for p in _BOT_CHALLENGE_PHRASES)
+
+
+def _is_article_title(title: str) -> bool:
+    """Reject landing/nav pages, which Tavily returns alongside real articles."""
+    t = title.strip().lower().rstrip(" .|-–—…")
+    if len(t) < 12:
+        return False
+    return not any(t == p or t.startswith(p + " |") for p in _NON_ARTICLE_TITLES)
 
 
 def _days_since(min_date: str) -> int:
@@ -75,6 +92,10 @@ def fetch_tavily(queries: list[str], source_name: str, min_date: str | None = No
                 continue
 
             title = extracted.get("title") or r["title"]
+            if not _is_article_title(title):
+                print(f"{source_name}: skipping non-article page {url}")
+                continue
+
             entry_id = make_id(title, extracted.get("doi"), url)
             entries.append({
                 "id": entry_id,
@@ -85,7 +106,8 @@ def fetch_tavily(queries: list[str], source_name: str, min_date: str | None = No
                 "condition": extracted.get("condition", "other"),
                 "sample_size": extracted.get("sample_size"),
                 "status": extracted.get("status", "published"),
-                "date": str(date.today()),
+                "date": dates.to_iso(r.get("published_date")),
+                "abstract": condense(r.get("content") or text),
                 "outcome_summary": extracted.get("outcome_summary"),
                 "doi": extracted.get("doi"),
                 "url": url,

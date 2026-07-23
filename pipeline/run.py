@@ -3,6 +3,8 @@ import sys
 from pathlib import Path
 from dotenv import load_dotenv
 
+from dedup import seen_ids
+
 load_dotenv(Path(__file__).parent.parent / ".env")
 
 DATA_PATH = Path(__file__).parent.parent / "data" / "entries.json"
@@ -18,7 +20,7 @@ def save_entries(entries: list[dict]) -> None:
     DATA_PATH.write_text(json.dumps(entries, indent=2))
 
 
-def run_tier1(start_date: str | None = None) -> list[dict]:
+def run_tier1(seen: set[str], start_date: str | None = None) -> list[dict]:
     from sources.pubmed import fetch as pubmed_fetch
     from sources.clinicaltrials import fetch as ct_fetch
     from sources.semantic_scholar import fetch as ss_fetch
@@ -50,14 +52,14 @@ def run_tier1(start_date: str | None = None) -> list[dict]:
 
     all_new = []
     for name in tasks:
-        new = filter_new(results.get(name, []))
+        new = filter_new(results.get(name, []), seen)
         print(f"  {name}: {len(new)} new after dedup")
         all_new.extend(new)
 
     return all_new
 
 
-def run_tier2(start_date: str | None = None) -> list[dict]:
+def run_tier2(seen: set[str], start_date: str | None = None) -> list[dict]:
     from sources.maps import fetch as maps_fetch
     from sources.chacruna import fetch as chacruna_fetch
     from sources.lucid_news import fetch as lucid_fetch
@@ -85,14 +87,14 @@ def run_tier2(start_date: str | None = None) -> list[dict]:
 
     all_new = []
     for name in tasks:
-        new = filter_new(results.get(name, []))
+        new = filter_new(results.get(name, []), seen)
         print(f"  {name}: {len(new)} new after dedup")
         all_new.extend(new)
 
     return all_new
 
 
-def run_tier3(start_date: str | None = None) -> list[dict]:
+def run_tier3(seen: set[str], start_date: str | None = None) -> list[dict]:
     from sources.psychedelic_alpha import fetch as alpha_fetch
     from sources.fda import fetch as fda_fetch
     from sources.compass import fetch as compass_fetch
@@ -124,7 +126,7 @@ def run_tier3(start_date: str | None = None) -> list[dict]:
 
     all_new = []
     for name in tasks:
-        new = filter_new(results.get(name, []))
+        new = filter_new(results.get(name, []), seen)
         print(f"  {name}: {len(new)} new after dedup")
         all_new.extend(new)
 
@@ -139,20 +141,26 @@ def main() -> None:
     args = parser.parse_args()
 
     existing = load_existing()
+    seen = seen_ids(existing)
     print(f"Existing entries: {len(existing)}")
 
     new_entries: list[dict] = []
-    new_entries.extend(run_tier1(start_date=args.since))
+    new_entries.extend(run_tier1(seen, start_date=args.since))
 
     if args.tier >= 2:
-        new_entries.extend(run_tier2(start_date=args.since))
+        new_entries.extend(run_tier2(seen, start_date=args.since))
 
     if args.tier >= 3:
-        new_entries.extend(run_tier3(start_date=args.since))
+        new_entries.extend(run_tier3(seen, start_date=args.since))
 
     all_entries = existing + new_entries
     save_entries(all_entries)
     print(f"\nTotal entries: {len(all_entries)} (+{len(new_entries)} new)")
+
+    # The weekly issue and its index are generated every run, not just on demand —
+    # skipping them left weekly/ frozen at the single issue written by hand in June.
+    from weekly import generate as generate_weekly
+    generate_weekly()
 
     from build import build as build_site
     build_site()

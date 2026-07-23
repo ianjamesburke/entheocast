@@ -45,6 +45,18 @@ def last_sunday(today: date) -> date:
     return today - timedelta(days=days_back)
 
 
+def current_week_key(today: date) -> tuple[str, int]:
+    """(key, week number) of the issue covering `today`.
+
+    An issue week runs Sunday to Saturday, but ISO weeks start on Monday, so the key
+    must be derived from the issue's Sunday — not from today. Deriving it from today
+    made index.html link to a week number the generator never wrote on any day except
+    Sunday.
+    """
+    key, _ = week_label(last_sunday(today))
+    return key, int(key.split("-W")[1])
+
+
 def week_label(sunday: date) -> tuple[str, str]:
     """Return (iso_key, display_label) for the week starting on sunday."""
     iso_year, iso_week, _ = sunday.isocalendar()
@@ -81,7 +93,7 @@ def entry_line(entry: dict) -> str:
 
     title = entry.get("title", "Untitled")
     url = entry.get("url", "")
-    summary = entry.get("outcome_summary")
+    summary = entry.get("outcome_summary") or entry.get("abstract")
 
     line = f'<a href="{url}" target="_blank" rel="noopener">{title}</a>'
     if meta:
@@ -148,7 +160,111 @@ def generate(since: date | None = None, all_entries_path: str = "data/entries.js
     html_path.write_text(_render_html(data))
     print(f"Wrote {html_path}")
 
+    index_path = html_dir / "index.html"
+    index_path.write_text(_render_index(json_dir))
+    print(f"Wrote {index_path}")
+
     return data
+
+
+def _render_index(json_dir: Path) -> str:
+    """Rebuild weekly/index.html from every issue snapshot on disk.
+
+    Generated on every run: the previous hand-written index listed a single issue and
+    never grew, so published issues were unreachable from the site.
+    """
+    issues = []
+    for path in sorted(json_dir.glob("*.json"), reverse=True):
+        try:
+            issues.append(json.loads(path.read_text()))
+        except (OSError, json.JSONDecodeError) as e:
+            print(f"Skipping unreadable weekly snapshot {path}: {e}")
+
+    rows_by_year: dict[str, list[str]] = {}
+    for issue in issues:
+        stats = issue.get("stats", {})
+        week = issue.get("week", "")
+        year = week.split("-")[0] or "Unknown"
+        compounds = [
+            COMPOUND_LABELS.get(c, c.title())
+            for c in list(issue.get("by_compound", {}))[:3]
+        ]
+        blurb = ", ".join(compounds) + " and more" if compounds else "No new entries"
+        label = issue.get("label", week)
+        # "Week 30 — July 19–25, 2026" -> the date range alone reads better in a list.
+        title = label.split("—", 1)[1].strip() if "—" in label else label
+        rows_by_year.setdefault(year, []).append(f"""
+  <a href="{week}.html" class="issue-row">
+    <div class="issue-num">W{week.split('-W')[-1]}</div>
+    <div class="issue-row-body">
+      <div class="issue-row-title">{title}</div>
+      <div class="issue-row-meta">{stats.get('new_this_week', 0)} entries · {stats.get('compounds_represented', 0)} compounds · {blurb}</div>
+    </div>
+    <div class="issue-row-cta">Read →</div>
+  </a>""")
+
+    sections = "".join(
+        f'\n  <div class="section-label">{year}</div>{"".join(rows)}\n'
+        for year, rows in sorted(rows_by_year.items(), reverse=True)
+    )
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Issues — Entheocast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script defer src="../molecules.js"></script>
+  <style>
+    .issue-row {{ display: flex; align-items: center; gap: 1.25rem; padding: 1rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; }}
+    .issue-row:last-child {{ border-bottom: none; }}
+    .issue-row:hover .issue-row-title {{ color: var(--accent); }}
+    .issue-num {{ font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--accent); min-width: 3.5rem; opacity: 0.7; }}
+    .issue-row-body {{ flex: 1; }}
+    .issue-row-title {{ font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; transition: color 0.15s; }}
+    .issue-row-meta {{ font-size: 0.72rem; color: var(--muted); }}
+    .issue-row-cta {{ font-size: 0.72rem; font-weight: 600; color: var(--accent); }}
+  </style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="wordmark">ENTHEO<span class="dot">·</span>CAST</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../trials.html">Trials</a>
+      <a href="../weekly/index.html" class="active">Weekly</a>
+      <a href="../podcast.html">Podcast</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="main-wrap" style="max-width:720px">
+  <div class="page-heading">Weekly Issues</div>
+  <p class="page-sub">Every Sunday: new entries, regulatory updates, and research summaries. Generated automatically from the pipeline — no editorial prose added.</p>
+{sections}
+  <p style="font-size:0.78rem;color:var(--muted);margin-top:2rem;line-height:1.6;">
+    New issues are generated automatically every Sunday at 8pm ET via GitHub Actions.
+    The pipeline fetches from PubMed, ClinicalTrials.gov, and curated sources, then writes
+    a weekly snapshot to <code style="font-size:0.72rem">data/weekly/</code> and generates this HTML.
+  </p>
+</main>
+
+<footer>
+  <span>Entheocast · Open data · MIT</span>
+  <span><a href="https://github.com/ianjamesburke/entheocast">GitHub</a></span>
+</footer>
+</div>
+</body>
+</html>
+"""
 
 
 def _render_html(data: dict) -> str:

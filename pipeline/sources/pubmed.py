@@ -1,36 +1,45 @@
-import httpx
+import xml.etree.ElementTree as ET
 from datetime import date
+
+import httpx
+
+import dates
+import relevance
+from classify import detect_compound, detect_condition
 from dedup import make_id
+from snippet import condense
 
 BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 QUERY = "psilocybin OR MDMA OR LSD OR ketamine OR DMT OR ibogaine OR ayahuasca OR mescaline"
-COMPOUND_KEYWORDS = ["psilocybin", "mdma", "lsd", "ketamine", "dmt", "ibogaine", "ayahuasca", "mescaline"]
-
-CONDITION_MAP = {
-    "depression": "depression",
-    "ptsd": "PTSD",
-    "anxiety": "anxiety",
-    "addiction": "addiction",
-    "ocd": "OCD",
-    "eating disorder": "eating_disorder",
-    "cluster headache": "cluster_headache",
-}
 
 
-def _detect_compound(text: str) -> str:
-    t = text.lower()
-    for c in COMPOUND_KEYWORDS:
-        if c in t:
-            return c
-    return "other"
+def _fetch_abstracts(client: httpx.Client, uids: list[str]) -> dict[str, str]:
+    """Map PMID -> abstract text. efetch is a separate call from esummary; a failure
+    here degrades the entry to no abstract rather than dropping it."""
+    if not uids:
+        return {}
+    try:
+        resp = client.get(
+            f"{BASE}/efetch.fcgi",
+            params={"db": "pubmed", "id": ",".join(uids), "retmode": "xml"},
+        )
+        resp.raise_for_status()
+        root = ET.fromstring(resp.text)
+    except Exception as e:
+        print(f"PubMed abstract fetch error: {e}")
+        return {}
 
-
-def _detect_condition(text: str) -> str:
-    t = text.lower()
-    for k, v in CONDITION_MAP.items():
-        if k in t:
-            return v
-    return "other"
+    abstracts: dict[str, str] = {}
+    for article in root.iter("PubmedArticle"):
+        pmid_el = article.find(".//PMID")
+        if pmid_el is None or not pmid_el.text:
+            continue
+        # Structured abstracts split across labelled sections; join in document order.
+        parts = ["".join(seg.itertext()).strip() for seg in article.iter("AbstractText")]
+        text = " ".join(p for p in parts if p)
+        if text:
+            abstracts[pmid_el.text] = text
+    return abstracts
 
 
 def fetch(min_date: str | None = None) -> list[dict]:
@@ -61,6 +70,8 @@ def fetch(min_date: str | None = None) -> list[dict]:
         summary.raise_for_status()
         result = summary.json()["result"]
 
+        abstracts = _fetch_abstracts(client, ids)
+
     entries = []
     for uid in ids:
         art = result.get(uid)
@@ -68,11 +79,18 @@ def fetch(min_date: str | None = None) -> list[dict]:
             continue
 
         title = art.get("title", "")
-        pub_date = art.get("pubdate", "")[:10] or str(date.today())
+        abstract = abstracts.get(uid, "")
+
+        # The query matches any field, so most hits are unrelated papers that merely
+        # cite a compound name or reuse one of its acronyms in another sense.
+        if not relevance.is_relevant(title, abstract):
+            continue
+
         doi = next((id_["value"] for id_ in art.get("articleids", []) if id_["idtype"] == "doi"), None)
         url = f"https://pubmed.ncbi.nlm.nih.gov/{uid}/"
-        compound = _detect_compound(title)
-        condition = _detect_condition(title)
+        haystack = f"{title} {abstract}"
+        compound = detect_compound(haystack)
+        condition = detect_condition(haystack)
 
         pub_types = [pt.lower() for pt in art.get("pubtype", [])]
         if "clinical trial" in pub_types:
@@ -93,7 +111,8 @@ def fetch(min_date: str | None = None) -> list[dict]:
             "condition": condition,
             "sample_size": None,
             "status": "published",
-            "date": pub_date,
+            "date": dates.to_iso(art.get("pubdate")),
+            "abstract": condense(abstract),
             "outcome_summary": None,
             "doi": doi,
             "url": url,
