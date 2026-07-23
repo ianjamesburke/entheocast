@@ -12,7 +12,7 @@
 
 ## Project
 
-Entheocast is a static site + automated pipeline that aggregates psychedelic clinical trials, studies, and regulatory updates into a structured open dataset, served on GitHub Pages. See `PRD.md` for full spec.
+Entheocast is a static site + automated pipeline that aggregates psychedelic clinical trials, studies, and regulatory updates into a structured open dataset, served on GitHub Pages.
 
 ## Stack
 
@@ -32,7 +32,7 @@ Required env vars: `TAVILY_API_KEY`, `OPENROUTER_API_KEY`. Read from `.env`, nev
 
 ## Style Decision Gate
 
-Per PRD: present 3 `index.html` style variants before building all pages. Do not build `style.css` or other pages until user picks. This is a **blocking checkpoint**.
+Resolved (see ROADMAP.md Phase 6) — light theme with molecular background, Syne + Plus Jakarta Sans, violet accent. `style.css` and all pages are built. Kept here as a record that this was a blocking checkpoint before build-out, not a rule to reapply.
 
 ## Generated Files
 
@@ -43,3 +43,41 @@ Run the build step standalone: `cd pipeline && uv run python build.py`
 ## What NOT to Build (v1)
 
 Newsletter, custom domain, podcast audio, React/Next.js, database, AI-written prose, user accounts.
+
+## Operations
+
+Deeper how-tos and gotchas (swapping the LLM or search provider, prompt revisioning) live in the local, gitignored `OPERATIONS.md`. `AGENTS.md` (also gitignored) points agents at both. This section is the quick-reference version.
+
+**Tuning knobs:**
+
+| Change | File |
+| --- | --- |
+| Run schedule | `.github/workflows/weekly.yml` (cron) |
+| Which tiers run | `weekly.yml` → `run.py --tier 3` |
+| LLM model | `MODEL` in `pipeline/llm.py` — any OpenRouter model id |
+| Search provider | `pipeline/tavily_client.py` — `search()` contract |
+| What counts as on-topic (patterns) | `pipeline/relevance.py` |
+| What counts as on-topic (LLM) | `RELEVANCE_PROMPT` in `pipeline/llm.py`; bump `PROMPT_REVISION` in `pipeline/judge.py` after editing |
+| Compound / condition taxonomy | `pipeline/classify.py` |
+| Accepted date formats | `pipeline/dates.py` |
+| How far back "Featured" reaches | `FEATURED_WINDOW_DAYS` in `pipeline/build.py` |
+| Abstract snippet length | `MAX_CHARS` in `pipeline/snippet.py` |
+| Page layout | `pipeline/templates/index.html.j2` |
+
+**Entry schema** (`data/entries.json`, flat array):
+
+| Field | Notes |
+| --- | --- |
+| `id` | sha256 of title + doi + url. Dedup key |
+| `title`, `url`, `source` | |
+| `compound` | psilocybin, mdma, ketamine, lsd, dmt, ibogaine, ayahuasca, mescaline, other |
+| `type` | phase_1/2/3, observational, meta_analysis, regulatory, news, preprint |
+| `condition` | depression, PTSD, anxiety, addiction, OCD, eating_disorder, cluster_headache, other |
+| `date` | Publication date, ISO `YYYY-MM-DD`. Null when the source gave nothing usable |
+| `first_seen` | Ingest date. Not a publication date — never rank or sort on this |
+| `abstract` | Condensed source abstract, verbatim |
+| `outcome_summary` | LLM-extracted finding. Tier 2/3 only |
+| `relevance` | `{relevant, reason, model, revision, judged}`. Absent means not yet screened, which renders |
+| `institution`, `sample_size`, `status`, `doi` | Nullable |
+
+Dedup derives from `data/entries.json` itself — no side-car state file.
