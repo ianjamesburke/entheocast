@@ -156,9 +156,25 @@ Tier 2/3 produced nothing for six weeks; three independent breakages stacked.
 - [x] Unify the week key: `build.py` derived it from today, the generator from the issue's Sunday, so the homepage linked to a nonexistent issue on every day but Sunday
 - [x] Home link in nav; spotlight restyled to the site palette
 
+### Operations documentation (2026-07-22)
+- [x] `pipeline/mimo.py` → `pipeline/llm.py`. It was named after the model it shipped with and outlived three of them (MiMo → Kimi K2.6 → gpt-oss-20b → gemini-2.5-flash-lite). Named for the layer now, so a future relevance judge lands in it without another rename. **Phase 3/4 entries above still say "Mimo" and "Jina" — that is the historical record of what was built then, not current architecture.**
+- [x] Extraction moved off `:free`. The account is on paid credits, so free variants bought nothing and had already cost weeks of downtime when one was withdrawn. Measured on the live task: gemini-2.5-flash-lite matched quality at ~1s/call vs ~22s, in 500 max_tokens vs 1500. ~$0.01/run
+- [x] Inter-call throttle 4s → 0.2s (the 4s spacing existed for the free tier's 20 req/min)
+- [x] README rewritten: stack table, how to swap the LLM and the search provider, where secrets live locally vs CI, entry schema. It previously documented Jina Reader, which no longer exists
+
+### LLM relevance screening (2026-07-22)
+Resolves the ketamine scope question with per-entry verdicts instead of a hand-written rule.
+
+- [x] `pipeline/judge.py` + `judge_relevance()` in `llm.py` — second-stage screen on what the pattern gate passes. Regex cannot separate "Ketamine for Treatment-Resistant Depression" from "Anaesthetic management of dogs"; both name a compound unambiguously
+- [x] Verdicts stored on the entry (`relevance`: relevant, reason, model, revision, judged). Each entry is judged exactly once; the weekly run screens only what dedup flags as new. Changing `MODEL` or bumping `PROMPT_REVISION` re-screens, and only then
+- [x] Failed calls leave an entry **unjudged, not rejected** — a provider outage cannot silently empty the site
+- [x] Rejected entries stay in `data/entries.json` as an audit trail (so a re-fetch cannot resurrect them); site, weekly issues, and trials table all filter them out
+- [x] Backfilled all 1,192 entries. Revision 1 was wrong in two ways, caught by auditing verdicts rather than trusting the pass rate: it read "Vet Brain" as veterinary and dropped **ibogaine for veterans with TBI**, and it dropped every chronic-pain trial (psilocybin for low back pain, MDMA for fibromyalgia) because the prompt conflated procedural pain with pain as a treatment target
+- [x] Revision 2 scored 15/15 on those failures; re-judged the corpus. 792 pass, 400 screened out. Ketamine fell 41% → 25% of the corpus, psilocybin now 40%
+- [x] Cost: ~$0.07 per full-corpus pass, well under $0.01/week ongoing
+
 ### Open
-- [ ] Ketamine is 41% of the corpus, much of it anesthesia, veterinary, and sedation research that is not psychedelic psychiatry. Decide whether a psychedelic-research tracker should scope ketamine to psychiatric indications. Homepage is unaffected (`_is_notable` already requires a named condition), but it skews the corpus and compound breakdown
-- [ ] `openai/gpt-oss-20b:free` may hit a daily free-tier cap under full weekly load; paid fallback is `moonshotai/kimi-k2.6`
+- [ ] Compass Pathways condition landing pages (e.g. "Post-traumatic stress disorder (PTSD)") still enter as entries. Low volume; the nav-page title filter does not catch them
 
 ---
 

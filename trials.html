@@ -146,8 +146,10 @@ let sortCol = null;
 let sortAsc = true;
 
 fetch("data/entries.json").then(r=>r.json()).then(data=>{
-  allEntries = data;
-  document.getElementById("total-count").textContent = data.length;
+  // Entries the relevance screen rejected stay in the raw JSON as an audit trail
+  // but are not part of the dataset the site presents.
+  allEntries = data.filter(e => e.relevance?.relevant !== false);
+  document.getElementById("total-count").textContent = allEntries.length;
   render();
 }).catch(()=>{
   document.getElementById("tbody").innerHTML='<tr><td colspan="4" class="empty-state">Could not load entries — open via HTTP server.</td></tr>';

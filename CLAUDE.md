@@ -19,7 +19,7 @@ Entheocast is a static site + automated pipeline that aggregates psychedelic cli
 - Python pipeline: `uv` (`cd pipeline && uv sync && uv run python run.py`)
 - Site: static HTML + vanilla CSS + vanilla JS — no framework, no database
 - GitHub Actions: weekly cron (Sunday 8pm ET)
-- APIs: PubMed, ClinicalTrials.gov, Semantic Scholar, bioRxiv; Tavily search; Jina Reader; Mimo via OpenRouter
+- APIs: PubMed, ClinicalTrials.gov, Semantic Scholar, bioRxiv; Tavily search; LLM extraction via OpenRouter (`pipeline/llm.py`)
 
 ## Ordering Constraint
 

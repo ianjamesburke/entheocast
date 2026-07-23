@@ -174,7 +174,10 @@
 const COMPOUND_LABELS = { psilocybin:"Psilocybin", mdma:"MDMA", ketamine:"Ketamine", lsd:"LSD", dmt:"DMT", ibogaine:"Ibogaine", ayahuasca:"Ayahuasca", mescaline:"Mescaline", other:"Other" };
 const COMPOUND_ORDER = ["psilocybin","mdma","ketamine","lsd","dmt","ibogaine","ayahuasca","mescaline","other"];
 
-fetch("data/entries.json").then(r=>r.json()).then(entries=>{
+fetch("data/entries.json").then(r=>r.json()).then(raw=>{
+  // Screened-out entries remain in the raw JSON as an audit trail; exclude them
+  // so the breakdown matches the counts rendered at build time.
+  const entries = raw.filter(e => e.relevance?.relevant !== false);
   const counts={};
   entries.forEach(e=>{ const c=e.compound||"other"; counts[c]=(counts[c]||0)+1; });
   const max=Math.max(...Object.values(counts));

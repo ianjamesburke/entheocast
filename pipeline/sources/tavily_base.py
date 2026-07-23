@@ -2,7 +2,7 @@ from datetime import date, datetime
 import dates
 from dedup import make_id
 from snippet import condense
-import mimo
+import llm
 import tavily_client as tavily
 
 COMPOUND_KEYWORDS = ["psilocybin", "mdma", "lsd", "ketamine", "dmt", "ibogaine", "ayahuasca", "mescaline"]
@@ -87,7 +87,7 @@ def fetch_tavily(queries: list[str], source_name: str, min_date: str | None = No
             if not _is_real_article(text):
                 print(f"{source_name}: skipping empty/bot-challenge page {url}")
                 continue
-            extracted = mimo.extract(text, url)
+            extracted = llm.extract(text, url)
             if not extracted:
                 continue
 

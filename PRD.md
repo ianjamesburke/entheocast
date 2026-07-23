@@ -14,8 +14,7 @@ The podcast layer comes later (YouTube episodes + transcripts). For now, the sit
 - Static HTML + vanilla CSS + vanilla JS on GitHub Pages
 - Python pipeline (`pipeline/run.py`) managed with `uv`
 - Tavily for web search (discover new research news beyond RSS/API sources)
-- Jina Reader for full-page text extraction
-- Mimo via OpenRouter for classification/extraction
+- LLM via OpenRouter for classification/extraction (`pipeline/llm.py`)
 - GitHub Actions cron: weekly (Sunday 8pm ET)
 - Future enhancement: custom domain, Resend newsletter
 
@@ -31,21 +30,21 @@ Three tiers of data collection, same pattern as the-rapids local news pipeline:
 
 Direct JSON parsing. Filter by psychedelic compound keywords. Extract into schema.
 
-**Tier 2 — RSS + Jina Reader + Mimo:**
+**Tier 2 — RSS + LLM extraction:**
 - MAPS.org RSS
 - Chacruna Institute RSS
 - Lucid News RSS
 
-Get items from feed, Jina Reader pulls full article text, Mimo extracts structured fields into schema.
+Get items from feed, read the full post body from the feed's content:encoded field, then the LLM extracts structured fields into schema.
 
-**Tier 3 — Tavily Web Search + Jina Reader + Mimo:**
+**Tier 3 — Tavily Web Search + LLM extraction:**
 - Psychedelic Alpha
 - FDA press releases
 - Compass Pathways press releases
 - Atai Life Sciences press releases
 - General psychedelic research news (broad Tavily queries)
 
-Tavily searches for recent psychedelic trial/study/regulatory updates. Jina Reader fetches full pages. Mimo identifies relevant entries and classifies into schema.
+Tavily searches for recent psychedelic trial/study/regulatory updates and returns full page text. The LLM identifies relevant entries and classifies them into schema.
 
 **The LLM extracts and classifies. It does NOT write articles or editorialized summaries.**
 
@@ -60,10 +59,10 @@ Tavily searches for recent psychedelic trial/study/regulatory updates. Jina Read
   {"name": "MAPS.org", "tier": 2, "type": "rss", "url": "https://maps.org/feed/", "notes": "Multidisciplinary Association for Psychedelic Studies. Press releases, study updates."},
   {"name": "Chacruna Institute", "tier": 2, "type": "rss", "url": "https://chacruna.net/feed/", "notes": "Cultural and ethical perspectives on psychedelics."},
   {"name": "Lucid News", "tier": 2, "type": "rss", "url": "https://www.lucid.news/feed/", "notes": "Psychedelic journalism. Features, interviews, policy."},
-  {"name": "Psychedelic Alpha", "tier": 3, "type": "tavily+jina", "url": "https://psychedelicalpha.com/", "notes": "Industry news aggregator. Regulatory + business angles."},
-  {"name": "FDA Press Releases", "tier": 3, "type": "tavily+jina", "url": "https://www.fda.gov/news-events/press-announcements", "notes": "Filter for psychedelic-related approvals, breakthrough therapy designations."},
-  {"name": "Compass Pathways", "tier": 3, "type": "tavily+jina", "url": "https://www.compasspathways.com/press-releases/", "notes": "Publicly traded. Phase 2/3 psilocybin trials."},
-  {"name": "Atai Life Sciences", "tier": 3, "type": "tavily+jina", "url": "https://www.atai.life/press-releases/", "notes": "Publicly traded. Multiple compound portfolio."},
+  {"name": "Psychedelic Alpha", "tier": 3, "type": "tavily", "url": "https://psychedelicalpha.com/", "notes": "Industry news aggregator. Regulatory + business angles."},
+  {"name": "FDA Press Releases", "tier": 3, "type": "tavily", "url": "https://www.fda.gov/news-events/press-announcements", "notes": "Filter for psychedelic-related approvals, breakthrough therapy designations."},
+  {"name": "Compass Pathways", "tier": 3, "type": "tavily", "url": "https://www.compasspathways.com/press-releases/", "notes": "Publicly traded. Phase 2/3 psilocybin trials."},
+  {"name": "Atai Life Sciences", "tier": 3, "type": "tavily", "url": "https://www.atai.life/press-releases/", "notes": "Publicly traded. Multiple compound portfolio."},
   {"name": "General News", "tier": 3, "type": "tavily", "queries": ["psychedelic clinical trial 2026", "psilocybin FDA", "MDMA therapy approval", "ketamine treatment study"], "notes": "Broad web search for news not caught by specific sources."}
 ]
 ```
@@ -158,7 +157,7 @@ Eventually this page will show:
 
 ```
 TAVILY_API_KEY=        # Tavily web search
-OPENROUTER_API_KEY=    # Mimo via OpenRouter
+OPENROUTER_API_KEY=    # LLM extraction via OpenRouter
 ```
 
 ## File Structure
@@ -217,7 +216,7 @@ Short, modeled on github.com/mhollingshead/billboard-hot-100:
 - [ ] GitHub Actions cron is configured
 - [ ] README is complete
 - [ ] PubMed + ClinicalTrials.gov scrapers work reliably (minimum viable)
-- [ ] Tavily + Jina Reader pipeline works for at least 2 Tier 3 sources
+- [ ] Tavily search pipeline works for at least 2 Tier 3 sources
 
 ## Kill Criteria
 

@@ -154,8 +154,16 @@ def main() -> None:
         new_entries.extend(run_tier3(seen, start_date=args.since))
 
     all_entries = existing + new_entries
-    save_entries(all_entries)
     print(f"\nTotal entries: {len(all_entries)} (+{len(new_entries)} new)")
+
+    # Screen only what arrived this run. Verdicts are stored on the entry, so the
+    # back catalogue is never re-judged (or re-billed). Backfill separately with
+    # `uv run python judge.py`.
+    if new_entries:
+        from judge import judge_all
+        judge_all(new_entries)
+
+    save_entries(all_entries)
 
     # The weekly issue and its index are generated every run, not just on demand —
     # skipping them left weekly/ frozen at the single issue written by hand in June.

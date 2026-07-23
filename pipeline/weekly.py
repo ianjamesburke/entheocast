@@ -108,7 +108,15 @@ def generate(since: date | None = None, all_entries_path: str = "data/entries.js
     repo_root = Path(__file__).parent.parent
     entries_path = repo_root / all_entries_path
 
-    all_entries: list[dict] = json.loads(entries_path.read_text())
+    corpus: list[dict] = json.loads(entries_path.read_text())
+    # Entries the relevance screen rejected are kept in the corpus for audit but
+    # are not part of any issue. Unjudged entries pass: a failed call must not
+    # silently shrink a week's issue.
+    all_entries = [
+        e for e in corpus
+        if not isinstance(e.get("relevance"), dict)
+        or e["relevance"].get("relevant") is not False
+    ]
     today = date.today()
     week_start = since or last_sunday(today)
     week_key, week_display = week_label(week_start)

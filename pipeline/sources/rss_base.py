@@ -3,7 +3,7 @@ import feedparser
 import dates
 from dedup import make_id
 from snippet import condense
-import mimo
+import llm
 
 COMPOUND_KEYWORDS = ["psilocybin", "mdma", "lsd", "ketamine", "dmt", "ibogaine", "ayahuasca", "mescaline"]
 
@@ -38,7 +38,7 @@ def fetch_rss(feed_url: str, source_name: str, min_date: str | None = None) -> l
         if not _is_relevant(title + " " + text):
             continue
 
-        extracted = mimo.extract(text, url)
+        extracted = llm.extract(text, url)
         if not extracted:
             continue
 

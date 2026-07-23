@@ -46,6 +46,18 @@ _TYPE_PRIORITY = {
 }
 
 
+def is_relevant(entry: dict) -> bool:
+    """Whether the LLM screen cleared this entry.
+
+    Unjudged entries pass. A verdict is only ever withheld when a call failed, and
+    a provider outage must not empty the site.
+    """
+    verdict = entry.get("relevance")
+    if not isinstance(verdict, dict):
+        return True
+    return verdict.get("relevant") is not False
+
+
 def published(entry: dict) -> date | None:
     """Publication date, not ingest date. None when the source gave nothing usable."""
     return dates.parse(entry.get("date"))
@@ -59,8 +71,8 @@ def blurb(entry: dict) -> str | None:
 
 def _is_notable(entry: dict) -> bool:
     """Regulatory/news is always eligible; research must name both a compound and a
-    psychiatric condition. This filters out ketamine/esketamine anesthesia and other
-    off-topic trials that mention a compound but aren't psychedelic-psychiatry research."""
+    psychiatric condition — a proxy for "substantial enough to headline", now that
+    the LLM screen upstream handles topical relevance."""
     if entry.get("type") in ("regulatory", "news"):
         return True
     return (
@@ -156,7 +168,11 @@ def build(entries_path: Path | None = None) -> None:
     if entries_path is None:
         entries_path = REPO_ROOT / "data" / "entries.json"
 
-    entries: list[dict] = json.loads(entries_path.read_text())
+    all_entries: list[dict] = json.loads(entries_path.read_text())
+    # Entries the screen rejected stay in the corpus as an audit trail (and so a
+    # re-fetch cannot resurrect them) but never reach the site.
+    entries = [e for e in all_entries if is_relevant(e)]
+    screened_out = len(all_entries) - len(entries)
     today = date.today()
     week_key, week_num = current_week_key(today)
 
@@ -190,7 +206,7 @@ def build(entries_path: Path | None = None) -> None:
 
     out_path = REPO_ROOT / "index.html"
     out_path.write_text(html)
-    print(f"Built {out_path} ({len(entries)} entries, week {week_key})")
+    print(f"Built {out_path} ({len(entries)} entries, {screened_out} screened out, week {week_key})")
 
 
 if __name__ == "__main__":
