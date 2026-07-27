@@ -56,8 +56,8 @@ No LLM needed. Direct JSON parsing, filter by compound keywords.
 
 - [x] `pipeline/tavily_client.py` — Tavily search wrapper; returns URLs + snippets (named tavily_client.py to avoid shadowing installed tavily package)
 - [x] `pipeline/sources/tavily_base.py` — shared Tavily+Jina+Mimo loop; filters PDFs/social/non-article URLs; global 4s/call rate limiter in mimo.py prevents 429s
-- [x] **Psychedelic Alpha** — Tavily search `site:psychedelicalpha.com`, Jina + Mimo
-- [x] **FDA Press Releases** — Tavily search `site:fda.gov psychedelic OR psilocybin OR MDMA`, Jina + Mimo
+- [x] ~~**Psychedelic Alpha**~~ — removed 2026-07-27: Tavily's raw_content extraction fails for this domain, so every result fell through to a short snippet and was discarded as a false bot-block. Structurally zero-yield.
+- [x] ~~**FDA Press Releases**~~ — removed 2026-07-27: same Tavily raw_content extraction failure as Psychedelic Alpha.
 - [x] **Compass Pathways** — Tavily search `site:compasspathways.com`, Jina + Mimo
 - [x] **Atai Life Sciences** — Tavily search `site:atai.life`, Jina + Mimo
 - [x] **General News** — 4 broad Tavily queries from PRD, Jina + Mimo
@@ -174,7 +174,7 @@ Resolves the ketamine scope question with per-entry verdicts instead of a hand-w
 - [x] Cost: ~$0.07 per full-corpus pass, well under $0.01/week ongoing
 
 ### Open
-- [ ] Compass Pathways condition landing pages (e.g. "Post-traumatic stress disorder (PTSD)") still enter as entries. Low volume; the nav-page title filter does not catch them
+- [x] Compass Pathways condition landing pages entering as entries — fixed 2026-07-27: `tavily_base.py` was nav-filtering the LLM-*extracted* title, but the LLM rewrites landing-page titles (e.g. to "Post-Traumatic Stress Disorder (PTSD)"), bypassing the filter. Now filters on Tavily's raw title before the LLM extraction call.
 
 ---
 

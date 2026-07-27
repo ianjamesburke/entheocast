@@ -24,7 +24,7 @@ PubMed, ClinicalTrials.gov, Semantic Scholar, bioRxiv/medRxiv.
 
 **Tier 2** — RSS feeds, LLM-extracted: MAPS, Chacruna, Lucid News.
 
-**Tier 3** — Tavily search, LLM-extracted: Psychedelic Alpha, FDA, Compass Pathways, Atai Life Sciences, general news.
+**Tier 3** — Tavily search, LLM-extracted: Compass Pathways, Atai Life Sciences, general news.
 
 Operational how-tos (swapping the LLM or search provider, secrets, all the tuning knobs) live in `CLAUDE.md` and the local, gitignored `OPERATIONS.md` — not here.
 

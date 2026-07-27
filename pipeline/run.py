@@ -95,8 +95,6 @@ def run_tier2(seen: set[str], start_date: str | None = None) -> list[dict]:
 
 
 def run_tier3(seen: set[str], start_date: str | None = None) -> list[dict]:
-    from sources.psychedelic_alpha import fetch as alpha_fetch
-    from sources.fda import fetch as fda_fetch
     from sources.compass import fetch as compass_fetch
     from sources.atai import fetch as atai_fetch
     from sources.general_news import fetch as news_fetch
@@ -104,8 +102,6 @@ def run_tier3(seen: set[str], start_date: str | None = None) -> list[dict]:
     from concurrent.futures import ThreadPoolExecutor, as_completed
 
     tasks = {
-        "Psychedelic Alpha": lambda: alpha_fetch(min_date=start_date),
-        "FDA Press Releases": lambda: fda_fetch(min_date=start_date),
         "Compass Pathways": lambda: compass_fetch(min_date=start_date),
         "Atai Life Sciences": lambda: atai_fetch(min_date=start_date),
         "General News": lambda: news_fetch(min_date=start_date),

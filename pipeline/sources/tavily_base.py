@@ -83,6 +83,10 @@ def fetch_tavily(queries: list[str], source_name: str, min_date: str | None = No
             if not _is_relevant(r["title"] + " " + r["content"]):
                 continue
 
+            if not _is_article_title(r["title"]):
+                print(f"{source_name}: skipping non-article page {url}")
+                continue
+
             text = r.get("raw_content") or r.get("content") or ""
             if not _is_real_article(text):
                 print(f"{source_name}: skipping empty/bot-challenge page {url}")
@@ -92,9 +96,6 @@ def fetch_tavily(queries: list[str], source_name: str, min_date: str | None = No
                 continue
 
             title = extracted.get("title") or r["title"]
-            if not _is_article_title(title):
-                print(f"{source_name}: skipping non-article page {url}")
-                continue
 
             entry_id = make_id(title, extracted.get("doi"), url)
             entries.append({
