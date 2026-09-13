@@ -33,7 +33,7 @@ jobs:
         run: |
           git config user.name "entheocast-bot"
           git config user.email "bot@entheocast"
-          git add data/ weekly/
+          git add data/ weekly/ index.html
           git diff --cached --quiet || git commit -m "weekly update $(date -u +%Y-%m-%d)"
           git push
 
